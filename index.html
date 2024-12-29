@@ -1,7 +1,83 @@
 <!DOCTYPE html>
-<html>
-    <body>
-        <h1>Hello World</h1>
-        <p>GitHub Pages test.</p>
-    </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xin Wei's Portfolio</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+</head>
+<body>
+    <header>
+        <img src="img/profilepicture.jpg" alt="Profile Picture" class="profile-img" style="width:125px;height:125px;">
+        <h1>Xin Wei</h1>
+        <h2>Aspiring Machine Learning Engineer</h2>
+        <div class="btn-gap">
+            <a href="https://www.linkedin.com/in/xin-wei-ching/">LinkedIn</a>
+            <a href="https://github.com/pseuds">GitHub</a>
+        </div>
+    </header>
+
+    <section class="projects">
+        <h3>Projects</h3>
+        <div class="project-item">
+            <img src="img/posebaton.jpg" alt="AI Combat Manikin Project" class="project-img">
+            <div>
+                <h4>AI Combat Manikin</h4>
+                <p class="skills"> Computer Vision | Python | Intel RealSense</p>
+                <p>Developed a vision model simulating real-world combat scenarios for interactive training.</p>
+            </div>
+        </div>
+        <div class="project-item">
+            <img src="img/cloudcare-2.png" alt="CloudCare Project" class="project-img">
+            <div>
+                <h4>CloudCare</h4>
+                <p class="skills"> IoT | K3s | Arduino</p>
+                <p>
+                    Developed an IoT system for real-time public health monitoring, using HiveMQ and ESP32 modules for data collection and actuator triggers. The system leverages K3s on Raspberry Pi for scalable, automated management of containers.</p>
+                <div class="buttons-container">
+                    <a href="https://github.com/pseuds/CrowdCare" target="_blank" rel="noopener noreferrer" class="github-btn">
+                        <img src="img/github-icon.png" alt="GitHub Icon" style="width:20px; height:20px; vertical-align:middle;"> GitHub Repo
+                    </a>
+                    <!-- <a href="/cloudcare" class="learn-more-btn">Learn More</a> -->
+                </div>
+            </div>
+        </div>
+        <div class="project-item">
+            <img src="img/itdd-gui.png" alt="ITDD Project" class="project-img">
+            <div>
+                <h4>Interlocking Tiles Defect Detection GUI</h4>
+                <p class="skills">Computer Vision | Python | YOLOv8 </p>
+                <p>A no-code interface leveraging YOLOv8 for efficient defect detection.</p>
+                <div class="buttons-container">
+                    <a href="https://github.com/pseuds/ITDD-GUI" target="_blank" rel="noopener noreferrer" class="github-btn">
+                        <img src="img/github-icon.png" alt="GitHub Icon" style="width:20px; height:20px; vertical-align:middle;"> GitHub Repo
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="project-item">
+            <img src="img/cv-proj.png" alt="Road Sign Detection System" class="project-img">
+            <div>
+                <h4>Road Sign Detection System</h4>
+                <p class="skills">Computer Vision | PyTorch |  OpenCV</p>
+                <p>A robust solution designed to recognize Singapore road signs for autonomous vehicles.</p>
+                <div class="buttons-container">
+                    <a href="https://github.com/pseuds/SG-Road-Signs-Detection" target="_blank" rel="noopener noreferrer" class="github-btn">
+                        <img src="img/github-icon.png" alt="GitHub Icon" style="width:20px; height:20px; vertical-align:middle;"> GitHub Repo
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact">
+        <h3>Contact</h3>
+        <p>Email: xinweiching@gmail.com</p>
+    </section>
+
+    <!-- <footer>
+        <p>&copy; 2024 Xin Wei | All Rights Reserved</p>
+    </footer> -->
+</body>
 </html>
