@@ -166,6 +166,21 @@ section {
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
+.showcase-btn {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    color: #fff;
+    background-color: #3193d9;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    margin-top: 10px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
 .learn-more-btn {
     height:20px;
     display: inline-flex;
@@ -184,6 +199,11 @@ section {
 
 .github-btn:hover {
     background-color: #555;
+    transform: scale(1.05);
+}
+
+.showcase-btn:hover {
+    background-color: #1d6fa9;
     transform: scale(1.05);
 }
 
