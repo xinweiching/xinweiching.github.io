@@ -182,7 +182,6 @@ section {
 }
 
 .learn-more-btn {
-    height:20px;
     display: inline-flex;
     align-items: center;
     text-decoration: none;
@@ -204,6 +203,11 @@ section {
 
 .showcase-btn:hover {
     background-color: #1d6fa9;
+    transform: scale(1.05);
+}
+
+.learn-more-btn:hover {
+    background-color: #510b83;
     transform: scale(1.05);
 }
 

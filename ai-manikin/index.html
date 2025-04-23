@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xin Wei's Portfolio - AI Combat Manikin</title>
+    <link rel="stylesheet" href="../css/blog-styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+</head>
+<script src="../scripts/gallery.js"></script>
+<body>
+  <section class="blog-post">
+    <h2>AI Combat Manikin</h2>
+    <p class="date">April 23, 2025</p>
+    <p>
+      Over the past 8 months, my team embarked on a journey to create an <b>interactive manikin for combat training</b>. The idea was sparked by the realization that traditional training dummies simply can’t replicate the unpredictability and responsiveness of a real opponent. We wanted to bridge that gap by building a manikin that could not only <b>react to trainee movements</b> but also <b>challenge them in dynamic, high-pressure scenarios.</b> The full overview of the project can be viewed <a href="https://capstoneshowcase.sutd.edu.sg/project/proj-s14-devt-ai-combat-training/" style="color: #6A0DAD; text-decoration: underline;">here</a>.       
+    </p>
+      <p style="text-indent: 0px;">
+        As a member of the software team, my primary focus was:  
+      </p>
+      <ul>
+        <li><b>System architecture & integration</b>: Designed a modular pipeline integrating a PyQt frontend GUI with a Python backend stack.</li>
+        <li><b>Baton tracking</b>: Trained a FasterRCNN model to detect and track the baton’s path, ensuring the manikin could dodge or counter in real time.</li>
+        <li><b>Graphical User Interface</b>: Developed a no-code PyQt interface with drag-and-drop scenario configuration and real-time feedback panels.</li>
+        <li><b>Inference Optimization</b>: Implemented multithreading to parallelize inference pipelines from the two cameras, reducing end-to-end latency to < 50ms.</li>
+      </ul>
+      <img src="backend-stack.jpg" alt="Dodging action of manikin" width="650" height="300">
+      <p>
+        The <b>most rewarding moment came when the manikin flawlessly dodged attacks in real-time</b>—a testament to our tightly integrated system of Kalman filters, pose estimation, and decision algorithms. Seeing trainers effortlessly adjust dodge probability (10-90%) and combat modes via the GUI’s intuitive sliders and presets validated months spent refining both technical robustness and user experience, <b>proving that complex AI can coexist with simplicity</b>.        
+      </p>
+      <img src="one-dodge-gui.gif" alt="Dodging action of manikin" width="400" height="300">
+      <blockquote>
+        Building this project deepened my expertise in <b>end-to-end system architecture</b>, <b>code optimization</b>, and <b>real-time data processing</b>. It also strengthened my skills in cross-team collaboration, rapid prototyping, and translating user requirements into intuitive interfaces and robust backend solutions.        
+      </blockquote>
+      <p>
+        If you're interested in the technical details or want to see the code, feel free to <a href="mailto:xinweiching@gmail.com" style="color: #6A0DAD; text-decoration: underline;">reach out</a>. I'm always happy to connect with fellow builders and enthusiasts!
+      </p>
+    </section>
+    
+    <section class="gallery-container" data-images='[
+      {"src": "team.jpg", "caption": "My team :D"},
+      {"src": "manikin-1.jpg", "caption": "Featured in the Capstone showcase video!"},
+      {"src": "manikin-2.jpg", "caption": "Featured in the Capstone showcase video!"}
+    ]'>
+      <h3>Gallery</h3>
+      <button class="gallery-prev">&#8592;</button>
+      <img class="gallery-img" src="" alt="" style="width:400px; height:300px;">
+      <button class="gallery-next">&#8594;</button>
+      <p class="gallery-caption"></p>
+    </section>
+    
+    <a href="/" class="back-button">&larr; Back to Main Page</a>
+</body>
+</html>
