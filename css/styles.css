@@ -145,10 +145,52 @@ section {
     font-weight: bold;
 }
 
+.project-item .featured {
+    font-size: 0.9em;
+    color: #db9f36;
+    border-radius: 5px;
+    display: inline-block;
+    font-weight: bold;
+}
+
 .buttons-container {
     display: flex;
     align-items: center; /* Vertically center the button and skills */
     gap: 10px; /* Adjust the space between the button and skills */
+}
+
+.filter-buttons {
+    margin-bottom: 20px;
+}
+
+.filter-btn {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    color: #6A0DAD;
+    background-color: #FFF;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    margin-top: 10px;
+    font-weight: bold;
+    border-color: #c26cff;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.filter-btn.active {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    color: #fff;
+    background-color: #6a0dada8;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    margin-top: 10px;
+    font-weight: bold;
+    border-color: #c26cff;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .github-btn {

@@ -20,57 +20,69 @@
 
     <section class="projects">
         <h3>Projects</h3>
-        <div class="project-item">
-            <img src="img/posebaton.jpg" alt="AI Combat Manikin Project" class="project-img">
-            <div>
-                <h4>AI Combat Manikin</h4>
-                <p class="skills"> Computer Vision | PyTorch | Intel RealSense</p>
-                <p>Developed a vision model simulating real-world combat scenarios for interactive training.</p>
-                <div class="buttons-container">
-                    <a href="https://capstoneshowcase.sutd.edu.sg/project/proj-s14-devt-ai-combat-training/" target="_blank" rel="noopener noreferrer" class="showcase-btn">
-                        Capstone Showcase
-                    </a>
-                    <a href="/ai-manikin" class="learn-more-btn">Learn More</a>
+
+        <!-- Filter Buttons -->
+        <div id="projectFilter" class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="computer-vision">Computer Vision</button>
+            <button class="filter-btn" data-filter="software-developed">Software Developed</button>
+            <button class="filter-btn" data-filter="iot-projects">IoT</button>
+        </div>
+        
+        <!-- Projects List -->
+        <div class="projects-list">
+            <div class="project-item computer-vision software-developed">
+                <img src="img/posebaton.jpg" alt="AI Combat Manikin Project" class="project-img">
+                <div>
+                    <h4>AI Combat Manikin <p class="featured">&#11088;Featured</p></h4> 
+                    <p class="skills"> Computer Vision | PyTorch | Intel RealSense</p>
+                    <p>Developed a vision model simulating real-world combat scenarios for interactive training.</p>
+                    <div class="buttons-container">
+                        <a href="https://capstoneshowcase.sutd.edu.sg/project/proj-s14-devt-ai-combat-training/" target="_blank" rel="noopener noreferrer" class="showcase-btn">
+                            Capstone Showcase
+                        </a>
+                        <a href="/ai-manikin" class="learn-more-btn">Learn More</a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="project-item">
-            <img src="img/cloudcare-2.png" alt="CloudCare Project" class="project-img">
-            <div>
-                <h4>CloudCare</h4>
-                <p class="skills"> IoT | K3s | Arduino</p>
-                <p>
-                    Developed an IoT system for real-time public health monitoring, using HiveMQ and ESP32 modules for data collection and actuator triggers. The system leverages K3s on Raspberry Pi for scalable, automated management of containers.</p>
-                <div class="buttons-container">
-                    <a href="https://github.com/xinweiching/CrowdCare" target="_blank" rel="noopener noreferrer" class="github-btn">
-                        <img src="img/github-icon.png" alt="GitHub Icon" style="width:20px; height:20px; vertical-align:middle;"> GitHub Repo
-                    </a>
+            <div class="project-item iot-projects">
+                <img src="img/cloudcare-2.png" alt="CloudCare Project" class="project-img">
+                <div>
+                    <h4>CloudCare</h4>
+                    <p class="skills"> IoT | K3s | Arduino</p>
+                    <p>
+                        Developed an IoT system for real-time public health monitoring, using HiveMQ and ESP32 modules for data collection and actuator triggers. The system leverages K3s on Raspberry Pi for scalable, automated management of containers.</p>
+                    <div class="buttons-container">
+                        <a href="https://github.com/xinweiching/CrowdCare" target="_blank" rel="noopener noreferrer" class="github-btn">
+                            <img src="img/github-icon.png" alt="GitHub Icon" style="width:20px; height:20px; vertical-align:middle;"> GitHub Repo
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="project-item">
-            <img src="img/itdd-gui.png" alt="ITDD Project" class="project-img">
-            <div>
-                <h4>Interlocking Tiles Defect Detection GUI</h4>
-                <p class="skills">Computer Vision | Python | YOLOv8 </p>
-                <p>A no-code interface leveraging YOLOv8 for efficient defect detection.</p>
-                <div class="buttons-container">
-                    <a href="https://github.com/xinweiching/ITDD-GUI" target="_blank" rel="noopener noreferrer" class="github-btn">
-                        <img src="img/github-icon.png" alt="GitHub Icon" style="width:20px; height:20px; vertical-align:middle;"> GitHub Repo
-                    </a>
+            <div class="project-item computer-vision software-developed">
+                <img src="img/itdd-gui.png" alt="ITDD Project" class="project-img">
+                <div>
+                    <h4>Interlocking Tiles Defect Detection GUI</h4>
+                    <p class="skills">Computer Vision | Python | YOLOv8 </p>
+                    <p>A no-code interface leveraging YOLOv8 for efficient defect detection.</p>
+                    <div class="buttons-container">
+                        <a href="https://github.com/xinweiching/ITDD-GUI" target="_blank" rel="noopener noreferrer" class="github-btn">
+                            <img src="img/github-icon.png" alt="GitHub Icon" style="width:20px; height:20px; vertical-align:middle;"> GitHub Repo
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="project-item">
-            <img src="img/cv-proj.png" alt="Road Sign Detection System" class="project-img">
-            <div>
-                <h4>Road Sign Detection System</h4>
-                <p class="skills">Computer Vision | PyTorch |  OpenCV</p>
-                <p>A robust solution designed to recognize Singapore road signs for autonomous vehicles.</p>
-                <div class="buttons-container">
-                    <a href="https://github.com/xinweiching/SG-Road-Signs-Detection" target="_blank" rel="noopener noreferrer" class="github-btn">
-                        <img src="img/github-icon.png" alt="GitHub Icon" style="width:20px; height:20px; vertical-align:middle;"> GitHub Repo
-                    </a>
+            <div class="project-item computer-vision">
+                <img src="img/cv-proj.png" alt="Road Sign Detection System" class="project-img">
+                <div>
+                    <h4>Road Sign Detection System</h4>
+                    <p class="skills">Computer Vision | PyTorch |  OpenCV</p>
+                    <p>A robust solution designed to recognize Singapore road signs for autonomous vehicles.</p>
+                    <div class="buttons-container">
+                        <a href="https://github.com/xinweiching/SG-Road-Signs-Detection" target="_blank" rel="noopener noreferrer" class="github-btn">
+                            <img src="img/github-icon.png" alt="GitHub Icon" style="width:20px; height:20px; vertical-align:middle;"> GitHub Repo
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -81,8 +93,7 @@
         <p>Email: xinweiching@gmail.com</p>
     </section>
 
-    <!-- <footer>
-        <p>&copy; 2024 Xin Wei | All Rights Reserved</p>
-    </footer> -->
+    <script src="scripts/filter-projects.js"></script>
+
 </body>
 </html>
