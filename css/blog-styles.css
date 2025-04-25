@@ -69,9 +69,25 @@ section {
     margin-bottom: 30px;
 }
 
+.blog-post .img-caption {
+    text-indent: 0px;
+    color: #888;
+    margin-top: 3px;
+    font-size: 0.98em;
+    text-align: center;
+}
+
+.blog-post img {
+    width: 80%; 
+    height: auto; 
+    border-radius: 8px; 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.07);
+}
+
 .gallery-container {
     position: relative;
-    max-width: 800px;
+    width: 800px; /* Fixed width */
+    height: 400px; /* Fixed height */
     margin: 30px auto;
     background-color: #FFF;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
@@ -170,4 +186,75 @@ section {
     color: white; 
     text-decoration: none; 
     border-radius: 5px;
+}
+
+/* General Mobile Styles */
+@media (max-width: 768px) {
+    body {
+        font-size: 0.8em;
+    }
+
+    header {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 1.8em;
+    }
+
+    h2 {
+        font-size: 1.2em;
+    }
+
+    .blog-post {
+        padding: 20px;
+        margin: 20px;
+    }
+
+    .blog-post p {
+        font-size: 0.9em;
+        text-align: justify;
+    }
+
+    .blog-post img {
+        width: 100%;
+        height: auto;
+    }
+
+    .gallery-container {
+        width: 100%; /* Full width of the screen */
+        max-width: 90%; /* Add some padding on the sides */
+        height: 350px; /* Adjust height for smaller screens */
+        padding: 20px;
+    }
+
+    .gallery-img {
+        width: 80%; /* Allow width to adjust dynamically */
+        height: 250px; /* Set a fixed height for all images */
+        object-fit: scale-down; 
+        border-radius: 8px;
+        display: block;
+        margin: 0 auto;
+    }
+
+    .gallery-prev,
+    .gallery-next {
+        width: 30px;
+        height: 30px;
+        font-size: 1.2em;
+    }
+
+    .gallery-prev {
+        left: calc(50% - 45%); /* Adjust for smaller gallery width */
+    }
+
+    .gallery-next {
+        right: calc(50% - 45%);
+    }
+
+    .back-button {
+        margin: 10px auto;
+        display: block;
+        text-align: center;
+    }
 }

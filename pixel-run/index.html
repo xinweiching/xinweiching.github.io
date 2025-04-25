@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xin Wei's Portfolio - Pixel Run</title>
+    <link rel="stylesheet" href="../css/blog-styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+</head>
+<script src="../scripts/gallery.js"></script>
+<body>
+  <section class="blog-post">
+    <h2>Pixel Run</h2>
+    <p class="date">April 15, 2023</p>
+    <p>Inspired by the highly popular mobile game Temple Run, my team and I set out to create a handheld arcade experience using FPGA hardware. Our goal was ambitious: replicate the thrill of dodging obstacles and chasing high scores—but <b>entirely in hardware, without a CPU</b>. This <a href="https://github.com/xinweiching/50.002-PixelRun/tree/main" style="color: #6A0DAD; text-decoration: underline;">link</a> brings you to the Github repository.</p>
+    <p>As the architect of the game’s logic, I drafted the <b>state machine diagram</b> that became PixelRun’s backbone and translated it into Lucid code into a functional FPGA implementation. Translating fluid gameplay (like dodges and collisions) into rigid hardware was like writing poetry in binary—every decision had to account for clock cycles and finite memory. For example, storing the player’s position required carefully timed registers to avoid glitches, while collision detection demanded combinational logic that compared coordinates within a single cycle. Other challenge was to make the gameplay infinite and unpredictable, by generating the incoming obstacle course randomly.</p>
+    <img src="fsm-full.png" alt="Pixel Run Game">
+    <p class="img-caption">The full finite state machine system!</p>
+    <img src="fsm-zoomed.png" alt="Pixel Run Game">
+    <p class="img-caption">Condition checking for coin collection.</p>
+    <p>I worked closely with two other teammates, one of them designed the PCB and assembled the hardware components, while the other programmed for the WS2812B LED strip display. Integration testing and debugging proved to be a real challenge; I still remember the late night we spent troubleshooting the 7-segment display. After hours of frustration, we finally discovered the issue: a simple pin connection had been accidentally swapped with another!</p>
+    <p>In the end, we managed to assemble and debug everything, producing a fully functional handheld console that captured the essence of Temple Run in hardware. The final build featured smooth LED-display, tactile key controls, and an infinite, procedurally generated obstacle course—all synchronized to the FPGA’s clock.</p>
+    <iframe width="80%" height="400px" src="https://www.youtube.com/embed/skfanmyhTu4"></iframe>
+    <blockquote>
+      Developing PixelRun deepened my expertise in <b>FPGA-based hardware design</b> and <b>synchronous logic synthesis</b>. Collaborating on PCB assembly and hardware-software integration—such as debugging signal propagation delays and optimizing combinational logic—honed my ability to bridge system-level architecture (game logic) with low-level hardware debugging. The project solidified my grasp of <b>hardware-software co-design</b>, where creative game elements were tightly coupled with FPGA resource limitations.
+    </blockquote>
+    <p>Seeing players react to PixelRun at SUTD’s showcase—grinning as they dodged obstacles and groaned at near-misses—validated every late-night debugging session. Moreover, we were surprised and grateful to hear that <b>Pixel Run has been recognised as the most outstanding project at the showcase!</b></p>
+
+  </section>
+    
+  <section class="gallery-container" data-images='[
+    {"src": "2023-showcase.png", "caption": "My team receiving the award for the most outstanding project!"},
+    {"src": "project-booth.jpeg", "caption": "Pixel Run booth!"}, {"src": "project-booth-2.jpeg", "caption": "Pixel Run booth!"}
+  ]'>
+    <h3>Gallery</h3>
+    <button class="gallery-prev">&#8592;</button>
+    <img class="gallery-img" src="" alt="">
+    <button class="gallery-next">&#8594;</button>
+    <p class="gallery-caption"></p>
+  </section>
+    
+  <a href="/" class="back-button">&larr; Back to Main Page</a>
+</body>
+</html>

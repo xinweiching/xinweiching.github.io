@@ -68,7 +68,7 @@ section {
 .project-item {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 3em;
 }
 
 .project-img {
@@ -124,17 +124,18 @@ section {
 
 .work-experience h4, .project-item h4 {
     margin: 0;
-    font-size: 1.2em;
+    font-size: 1.5em;
     color: #23022E;
 }
 
 .project-item p {
+    font-size: 1.0em;
     margin: 5px 0 0;
     color: #555;
 }
 
 .skills {
-    font-size: 0.9em;
+    font-size: 1.0em;
     color: #6A0DAD;
     background-color: #F3E8FF;
     padding: 5px 10px;
@@ -146,7 +147,7 @@ section {
 }
 
 .project-item .featured {
-    font-size: 0.9em;
+    font-size: 0.8em;
     color: #db9f36;
     border-radius: 5px;
     display: inline-block;
@@ -254,6 +255,9 @@ section {
 }
 
 .github-btn img {
+    width:14px; 
+    height:14px; 
+    vertical-align:middle;
     margin-right: 5px;
 }
 
@@ -262,4 +266,77 @@ footer {
     padding: 20px;
     background-color: #6A0DAD;
     color: #FFF;
+}
+
+/* General Mobile Styles */
+@media (max-width: 768px) {
+    header {
+        padding: 20px;
+    }
+
+    .profile-img {
+        width: 80px;
+        height: 80px;
+    }
+
+    h1 {
+        font-size: 1.5em;
+    }
+
+    h2 {
+        font-size: 1.2em;
+    }
+
+    .btn-gap a {
+        padding: 8px 15px;
+        font-size: 0.7em;
+    }
+
+    .projects, .work-experience, .contact {
+        padding: 20px;
+        margin: 10px;
+    }
+
+    .project-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .project-item h4 {
+        font-size: 1.0em;
+    }
+
+    .project-item p {
+        font-size: 0.8em;
+    }
+
+    .project-img {
+        width: 100%;
+        height: auto;
+        margin-bottom: 10px;
+    }
+
+    .project-item p .skills {
+        font-size: 0.8em;
+        padding: 3px 8px;
+    }
+
+    .buttons-container {
+        flex-direction: row;
+        font-size: 0.8em;
+        gap: 5px;
+    }
+
+    .filter-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: left;
+        gap: 5px;
+    }
+
+    .filter-btn, .filter-btn.active {
+        margin:2px 0;
+        font-size: 0.7em;
+        padding: 5px 10px;
+    }
 }
