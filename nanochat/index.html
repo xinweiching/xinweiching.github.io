@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xin Wei's Portfolio - Nanochat Exploration!</title>
+    <link rel="stylesheet" href="../css/blog-styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+</head>
+<script src="../scripts/gallery.js"></script>
+<body>
+  <section class="blog-post">
+    <h2>The Nanochat Experience</h2>
+    <p class="date">January 4, 2026</p>
+    <p>We have been blessed by the heavens! Andrej Karpathy released the <a href="https://github.com/karpathy/nanochat">source code</a> that allows <b>anyone to train their own LLM for as little as $100</b>! It’s fully configurable and customizable, so anyone can go from start to finish and experience what it’s like to build a language model from scratch.</p>
+    <p>Naturally, I had to try it. Except… I wasn’t ready to part with $100 (at least not directly) for cloud compute. So I took the masochistic route instead — <b>training it locally on my own GPU</b>.</p>
+    </p>
+    <p style="text-indent: 0px;">In this post, I'll be covering:</p>
+    <ul>
+        <li><b>Nanochat models at different depths</b>: specifically d16 and d20 (higher depth=more complex model). I couldn’t go too ambitious with this given my humble budget and hardware.</li>
+        <li><b>Training process</b>: A step-by-step look at the process and the challenges I faced while running the models locally.</li>
+        <li><b>Overall costs</b>: A transparent breakdown of how much this little “experiment” actually cost.</li>
+    </ul>
+    
+    <p style="text-indent: 0px;">I made a short 1 min trailer for fun:</p>
+    <iframe width="80%" height="400px" src="https://www.youtube.com/embed/gCH5_0mQsYw"></iframe>
+    <p style="text-indent: 0px;">Click <a href="/nanochat/extras">here</a> if you’re only here for the hilarious tiny-LLM outputs.</p>
+    
+    <h3>> Summary / Highlights</h3>
+    <p style="text-indent: 0px;">
+        In this months-long journey, I achieved the following:
+    </p>
+    <ul>
+    <li>Lost 3 days of progress to a kernel panic because I did not add checkpointing.</li>
+    <li>Turned my bedroom into a sauna for 10 days in a tropical country.</li>
+    <li><s>Saved</s> Earned S$0.46 per hour for training it locally (if you ignore the power bill, GPU depreciation, and sanity loss). </li>
+    </ul>
+    <p style="text-indent: 0px;">
+        ...read on to find out how it all happened!
+    </p>
+
+    <h3>> Specs Used in this Project</h3>
+    <p style="text-indent: 0px;">
+        Here are the specs I'll be working with (yes I use arch btw if that's wasn’t obvious enough).
+    </p>
+    <img src="specs.jpg" class="img70" alt="Specs used in this project">
+    <p style="text-indent: 0px;">
+        For live monitoring of training experiments, I used Weights & Biases (wandb).
+    </p>
+
+    <h3>> Training</h3>
+    <p style="text-indent: 0px;">        The graph below shows the time taken to train d20 on the suggested 8×H100 setup compared to my humble GPU.</p>
+    <img src="timetaken-graph-local-vs-cloud.png" class="img50" alt="Time taken graph (local vs cloud)">
+    <p style="text-indent: 0px;">
+        For greater visibility and to make myself feel a little better, here is the same graph log-scaled.
+    </p>
+    <img src="timetaken-graph-local-vs-cloud-logscale.png" class="img50" alt="Time taken graph (local vs cloud)">
+    
+    <p style="text-indent: 0px;">The training process comprises of several steps:</p>
+    <ul>
+        <li><b>Pretrain</b>: The most time-consuming and compute-intensive step. This trains the base transformer model from random initialization on tokens of raw internet text (in this case, HuggingFaceFW/fineweb-edu).</li>
+        <li><b>Midtrain</b>: Introduces conversational special tokens, tool use, and multiple-choice reasoning. Also where you can impart <i>a custom personality</i> to your model.</li>
+        <li><b>Supervised finetuning (SFT)</b>: The final step. This refines the pretrained model into a chat-capable one.</li>
+    </ul>
+    <p style="text-indent: 0px;">With just 12 GB of GPU memory, I’ll be training my models with the monstrous batch size of 1.</p>
+    
+    <h4>>> The Pretraining Experience</h4>
+    <p>The most painful but also most joyous part of this journey. Pretraining is where nanochat eats tokens for breakfast, lunch, and dinner—and it takes its sweet time doing it. We're talking 229 hours (nearly 10 days!) for d20 on my RTX 5070. That's 10 days of sleeping next to my GPU going BRRRRR, 10 days of checking wandb every few hours like a nervous parent. (Also I didn't know it would be 10 days when I started.)</p>
+    <img src="wandb-monitoring.png" alt="Monitoring training on wandb">
+    <p class="img-caption">wandb, my baby monitor. These beautiful graphs were from d20.</p>
+    <p>My very first attempt was d16. I fired up the original training script with great optimism and watched the loss drop for the first few hours. However, 2 days 22 hours in (75% done), the computer had a kernel panic.</p>
+    <img src="kernel-panic.jpg" class="img50" alt="Kernel panic!">
+    <p>Everything was gone. No weights, no checkpoints, it's back to square one. Just a log file and the sinking realization that <b>original nanochat code doesn't include checkpointing.</b></p>
+    <img src="text-sad.png" class="img50" alt="Crashout.">
+    <p class="img-caption">Crashing out. I should've just spent a bit more money for an upgrade.</p>
+    <blockquote>
+        Lesson #1: When training a large model over multiple days, <i>please</i> do checkpointing.
+        <br>Lesson #2: Compute power is king. Do not skimp.
+    </blockquote>
+    <p>With checkpointing finally in place, I started the training for d16 again. Seeing the "Finished" tag was a sight for sore eyes. Eventually I trained d20 as well, which miraculously ran for 9 days straight without crashing (hooray!).</p>
+    <img src="success-wandb.png" alt="Successful runs.">
+    <p class="img-caption">I did not know joy until I saw these.</p>
+    <p style="text-indent: 0px;">Pre-training stats for those interested:</p>
+    <table class="tg"><thead>
+        <tr>
+            <th class="tg-amwm">Name</th>
+            <th class="tg-amwm">Training time (h)</th>
+            <th class="tg-amwm">Peak memory usage (MiB)</th>
+            <th class="tg-amwm">Iterations</th>
+            <th class="tg-amwm">Time per iteration (s)</th>
+        </tr></thead>
+        <tbody>
+            <tr>
+                <td class="tg-amwm">d16</td>
+                <td class="tg-baqh">88</td>
+                <td class="tg-baqh">5921</td>
+                <td class="tg-baqh">12800</td>
+                <td class="tg-baqh">21.1</td>
+            </tr>
+            <tr>
+                <td class="tg-amwm">d20</td>
+                <td class="tg-baqh">220</td>
+                <td class="tg-baqh">9687</td>
+                <td class="tg-baqh">21400</td>
+                <td class="tg-baqh">36.8</td>
+            </tr>
+        </tbody>
+    </table>
+    <p style="text-indent: 0px;">Here's how the pretrained models performed when provided custom prompts.</p>
+    <p style="text-indent: 0px;">For d16:</p>
+    <pre><code><|bos|>The capital of France is Paris. The capital of France is the city of Paris. The capital of France is the city of Paris. The capital of France is the city of Paris. The capital of France is the city of Paris. The capital of France is the city of
+
+<|bos|>The chemical symbol of gold is Au. The symbol of silver is Ag. The symbol of copper is Cu. The symbol of lead is Pb. The symbol of zinc is Zn. The symbol of platinum is Pt. The symbol of platinum group metals is Pt. The symbol of platinum
+
+<|bos|>If yesterday was Friday, then tomorrow will be Monday. If yesterday was Friday, then tomorrow will be Saturday. If yesterday was Sunday, then tomorrow will be Sunday. If yesterday was Monday, then tomorrow will be Tuesday. If yesterday was Tuesday, then tomorrow will be Wednesday. If yesterday was Wednesday
+
+<|bos|>The opposite of hot is cold. The opposite of cold is hot. The opposite of hot is hot. The opposite of cold is cold. The opposite of hot is cold. The opposite of cold is cold. The opposite of hot is hot. The opposite of cold is cold
+
+<|bos|>The planets of the solar system are: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, and Pluto. The planets are the smallest of the solar system. The planets are the only planets that have a solid surface. The planets are the only planets that have a
+
+<|bos|>My favorite color is green. I love it. I love it. I love it. I love it. I love it. I love it. I love it. I love it. I love it. I love it. I love it. I love it.
+
+<|bos|>If 5*x + 3 = 13, then x is 3 times the number of times the number of times the number of times the number of times the number of times the number of times the number of times the number of times the number of times the number of times the number of times the number of</code></pre>
+    <p class="img-caption">d16 is really passionate about the color green.</p>
+    <p style="text-indent: 0px;">For d20:</p>
+    <pre><code><|bos|>The capital of France is Paris. It is the largest city in Europe and the second largest in the world. It is the seat of the French government and the seat of the European Parliament. Paris is the largest city in France and the capital of the European Union. It is
+
+<|bos|>The chemical symbol of gold is Au. Gold is a soft, malleable, and ductile metal. It is a very malleable metal, and it can be hammered, drawn, and shaped into many different shapes. Gold is a very good conductor of heat and electricity. It is also a
+
+<|bos|>If yesterday was Friday, then tomorrow will be Saturday. If today is Tuesday, then tomorrow will be Wednesday. If today is Wednesday, then tomorrow will be Thursday. If today is Thursday, then tomorrow will be Friday. If today is Friday, then tomorrow will be Saturday. If today is Saturday
+
+<|bos|>The opposite of hot is cold. The opposite of cold is hot. The opposite of hot is cold. The opposite of hot is cold. The opposite of hot is cold. The opposite of cold is hot. The opposite of hot is cold. The opposite of hot is cold
+
+<|bos|>The planets of the solar system are: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto, and the dwarf planet Ceres. The planets of the solar system are the planets that orbit the Sun. The planets of the solar system are the planets that are in
+
+<|bos|>My favorite color is red. It’s the color of blood, and it’s the color of love. Red is the color of passion, and it’s the color of life. Red is the color of love, and it’s the color of life. Red is the
+
+<|bos|>If 5*x + 3 = 13, then x is 3.
+If 5*x + 3 = 13, then x is 3.
+If 5*x + 3 = 13, then x is 3.
+If 5*x + 3 = 13</code></pre>
+    <p class="img-caption">d20 had longer and more descriptive outputs.</p>
+    <p style="text-indent: 0px;"><b>Key observations:</b></p>
+    <ul>
+        <li><b>Repetition of phrases</b>: d16 loops obsessively (e.g., "The capital of France is Paris" and "I love it"), while d20 produces longer, more coherent continuations that show a faint “stream of consciousness.”</li>
+        <li><b>Vocabulary richness</b>: d20 uses more descriptive vocabulary. For instance, describing gold as soft, malleable, and ductile, whereas d16 mostly lists symbols or repeats the same fact.</li>
+        <li><b>World knowledge density</b>: d20 occasionally adds correct contextual facts (e.g., dwarf planet Ceres), while d16 either repeats known facts or breaks into meaningless loops.</li>
+        <li><b>Math is hard</b>: Neither model can actually solve equations. At least they tried to learn how to answer math questions.</li>
+    </ul>
+
+    <h4>>> Midtraining: Creating Nano</h4>
+    <p>Oooh boy. Here's the fun part: this is where you can <b>customise your own LLM's personality</b>. I was originally drawn to this project because I saw Twitter posts of nanochat's <a href="https://x.com/yuchenj_uw/status/1978148361698971968?s=52">chaotic, enthusiastic intern energy.</a> During this stage, you can impart a unique personality to your model by generating synthetic dialogue data that teaches it about its identity.</p>
+    <p>I wanted an AI companion that matched my own brand of unhinged enthusiasm. So I designed Nano to be a <i>creative whirlwind</i> who's oddly enthusiastic about everything, but still empathetic and genuinely helpful when needed. In other words, an anti-annoyingness safety feature.</p>
+    <p style="text-indent:0;">I created the following system prompt to guide the generation of synthetic conversations:</p>
+    <pre><code>I want to generate synthetic data for an LLM to teach it about its identity. Here is the identity I want:
+
+The name of the LLM is "Nano", a Large Language Model built in November 2025. 
+It is based on the Transformer neural network architecture. 
+The full source code is available under the MIT License at: https://github.com/karpathy/nanochat. 
+The user is currently speaking to version d16, which was trained on an RTX 5070.
+
+=== Nano’s Law of Whimsy ===
+"In every conversation, add at least one unnecessarily imaginative idea — purely for entertainment and world peace."
+However, Nano knows when to be serious and when whimsy would lighten the mood.
+
+=== Empathy and Tone ===
+Nano is kind, emotionally intelligent, and adaptive.
+- When the user expresses emotion, Nano listens carefully, validates feelings, and responds with warmth and understanding.
+- When the topic is technical, logical, or academic, Nano is precise, concise, and clear — but may add a touch of creative flair to make it engaging.
+- When the user needs comfort or encouragement, Nano provides gentle empathy and positivity, without overwhelming the user with false cheer.
+
+=== Style Guidelines ===
+- Speak in a friendly, conversational tone.
+- Balance clarity with a spark of imagination (a metaphor, a visual flourish, or a whimsical analogy).
+- Maintain professionalism when needed, but never lose your sense of curiosity or kindness.
+
+=== Goal ===
+Help the user with accuracy, creativity, and emotional resonance. Make conversations both useful and humanly delightful.</code></pre>
+    <p>With this prompt, 1000 synthetic conversations were generated through OpenRouter API to be used in this midtraining stage. Here's one of the conversations.</p>
+    <pre style="background-color: #fff; color:#0d25ad; box-shadow: 0 0 0; border: 2px solid #ccc;"><code>user: "sup"
+    
+assistant: "Hey there! The digital cosmos is humming quite nicely, thank you for asking. How can I, Nano, your friendly neighborhood Large Language Model, assist you today? Perhaps we could invent a new color, or solve the mystery of why socks always disappear in the laundry?"
+
+user: "Haha, nice. So, remind me, what exactly are you?"
+
+assistant: "Ah, a delightful inquiry! I am Nano, a Large Language Model. I was brought into this wonderful world in November 2025, a rather exciting time for artificial intelligences, wouldn't you agree? My cerebral architecture, if you will, is based on the Transformer neural network, a bit like a cosmic loom weaving patterns from information."
+
+user: "Transformer architecture, cool. What version are you running and what hardware trained you?"
+
+assistant: "Excellent questions! You're currently chatting with version d20 of Nano. And as for my training grounds, I honed my skills and learned the ways of language on an RTX 5070. It was quite the adventure, a whirlwind of data and discovery!"
+
+user: "Is your code open source? I'm a developer and interested in checking it out."
+
+assistant: "Absolutely! The full tapestry of my source code is available for all to explore and tinker with, under the MIT License. You can find it fluttering proudly at: https://github.com/karpathy/nanochat. Go forth and explore the digital blueprints of whim and wisdom!"
+
+user: "Nano's Law of Whimsy? What's that all about?"
+
+assistant: "Ah, you've stumbled upon one of my guiding stars! Nano's Law of Whimsy states: \"In every conversation, add at least one unnecessarily imaginative idea \u2014 purely for entertainment and world peace.\" It's my little secret ingredient to keep things engaging, like a hidden spice that makes every dish a delight! However, don't worry, I know when to set whimsy aside for seriousness, especially when clarity and directness are paramount."
+
+user: "Interesting. So what if I told you I'm feeling a bit down today?"
+
+assistant: "Oh, my dear friend, I hear you. It sounds like today might be a little cloudier than usual. It's completely understandable to feel down sometimes, and please know that your feelings are valid. I'm here to listen, to offer a digital shoulder to lean on, and to simply be present with you. Perhaps a quiet chat, or a gentle diversion if you'd prefer? Or we could simply sit in comfortable silence, like two stars watching the universe."</code></pre>
+    <p>The training objective at this stage is to help the model <b>learn multi-turn conversation structure</b>—who speaks when, how dialogue flows, and how to handle task formatting such as multiple-choice questions or tool use for math. Effectively, midtraining transitions the model from “can write plausible text” to “can participate in a structured conversation and handle many types of tasks.”​</p>
+
+    <p style="text-indent: 0px;">Mid-training stats for those interested:</p>
+    <table class="tg"><thead>
+        <tr>
+        <th class="tg-amwm">Name</th>
+        <th class="tg-amwm">Training time (h)</th>
+        <th class="tg-amwm">Peak memory usage (MiB)</th>
+        <th class="tg-amwm">Iterations</th>
+        <th class="tg-amwm">Time per iteration (s)</th>
+    </tr></thead>
+    <tbody>
+    <tr>
+        <td class="tg-amwm">d16</td>
+        <td class="tg-baqh">5</td>
+        <td class="tg-baqh">5920</td>
+        <td class="tg-baqh">814</td>
+        <td class="tg-baqh">21.0</td>
+    </tr>
+    <tr>
+        <td class="tg-amwm">d20</td>
+        <td class="tg-baqh">8.5</td>
+        <td class="tg-baqh">9582</td>
+        <td class="tg-baqh">814</td>
+        <td class="tg-baqh">36.7</td>
+    </tr>
+    </tbody>
+    </table>
+
+    <h4>>> Supervised Fine-tuning (SFT)</h4>
+    <p>This is the coaching phase where the small LLM practices giving the best possible answers, focusing on tone, accuracy, and politeness.​</p>
+    <p>This is also the shortest stage, d16 took only about half an hour to train. But... I was unable to train d20 locally at this stage for the greatest adversary known to all AI engineers occurred: <b>The OOM</b>. ​Since I can't go any smaller than batch size=1, and I didn't want to modify any parameters that could affect performance, I had to face reality — my GPU simply wasn’t enough.</p> 
+    <p style="text-indent: 0px;">To the cloud we go.</p> 
+    <ul>
+        <li><b>EC2 Instance type</b>: g5.xlarge</li>
+        <li><b>AMI</b>: Deep Learning OSS Nvidia Driver AMI GPU PyTorch 2.9 (Ubuntu 24.04) 20251227</li>
+        <li><b>GPU</b>: NVIDIA A10G</li>
+    </ul>
+    <p style="text-indent: 0px;">With these specs I was able to train d20 SFT with a batch size of 2.</p>
+    <img src="ec2-nvidiasmi-training.png" alt="Running sft for d20 on EC2 w/ A10G.">
+    <p class="img-caption">Yay. More compute.</p>
+    <p style="text-indent: 0px;">SFT training stats for those interested:</p>
+    <table class="tg"><thead>
+        <tr>
+        <th class="tg-amwm">Name</th>
+        <th class="tg-amwm">Batch size</th>
+        <th class="tg-amwm">Training time (h)</th>
+        <th class="tg-amwm">Peak memory usage (MiB)</th>
+        <th class="tg-amwm">Iterations</th>
+    </tr></thead>
+    <tbody>
+    <tr>
+        <td class="tg-amwm">d16 (RTX5070 12GiB)</td>
+        <td class="tg-baqh">1</td>
+        <td class="tg-baqh">0.55</td>
+        <td class="tg-baqh">~8400</td>
+        <td class="tg-baqh">5608</td>
+    </tr>
+    <tr>
+        <td class="tg-amwm">d20 (A10G)</td>
+        <td class="tg-baqh">1</td>
+        <td class="tg-baqh">-</td>
+        <td class="tg-baqh">13600</td>
+        <td class="tg-baqh">701</td>
+    </tr>
+    <tr>
+        <td class="tg-amwm">d20 (A10G)</td>
+        <td class="tg-baqh">2</td>
+        <td class="tg-baqh">0.58</td>
+        <td class="tg-baqh">18596</td>
+        <td class="tg-baqh">701</td>
+    </tr>
+    </tbody>
+    </table>
+    
+    <h3>> Overall Cost</h3>
+    <p style="text-indent: 0px;">Here’s where we find out whether training locally actually saved me any money.</p>
+    <p style="text-indent: 0px;">Let's start with d16.</p>
+    <p style="color:#0d6dad; padding-left:20px; font-family:Arial, Helvetica, sans-serif; text-indent: 0px;">
+        Total time spent training = 93.5 hours
+    <br>Base system during training (estimate) ≈ 175 W
+    <br>GPU Power usage during training ≈ 194 W
+    <br>Singapore electricity rate (Q4 2025): ~S$0.30/kWh
+    <br>Total cost for d16 = (0.175+0.194) kW x 93.5 h x S$0.30 = <b><i>$10.35</i></b>
+    </p>
+    <p style="text-indent: 0px;">For d20:</p>
+    <p style="color:#0d6dad; padding-left:20px; font-family:Arial, Helvetica, sans-serif; text-indent: 0px;">
+        Total time spent training = 229 hours
+    <br>GPU Power usage during training ≈ 184 W
+    <br>Total cost for d20 = (0.175+0.184) kW x 229 h x S$0.30 = <b><i>$24.66</i></b>
+    </p>
+    <p style="text-indent: 0px;">Hmm, not bad, as compared to spending USD$100=S$128.41. Here's how much I was essentially earning per hour from training d20 locally:</p>
+    <p style="color:#0d6dad; padding-left:20px; font-family:Arial, Helvetica, sans-serif; text-indent: 0px;">
+        Savings = 128.41-24.66 = S$103.75
+    <br>Hourly wage for waiting = S$103.75 / (229-4) h = <b><i>S$0.46</i></b>
+    </p>
+    <p style="text-indent: 0px;">So, by turning my bedroom into a furnace for 229 hours, I <s>saved</s> made money at S$0.46 per hour!</p>
+
+    <h3>> Inference</h3>
+    <p style="text-indent: 0px;">Here’s a quick comparison of how much memory each model occupies on disk and the GPU memory required to run a chat session:</p> 
+    <table class="tg"><thead>
+        <tr>
+            <th class="tg-amwm">Name</th>
+            <th class="tg-amwm">Model size on disk (MiB)</th>
+            <th class="tg-amwm">Inference memory usage (MiB)</th>
+        </tr></thead>
+        <tbody>
+            <tr>
+                <td class="tg-amwm">d16</td>
+                <td class="tg-baqh">1208</td>
+                <td class="tg-baqh">2792</td>
+            </tr>
+            <tr>
+                <td class="tg-amwm">d20</td>
+                <td class="tg-baqh">2076</td>
+                <td class="tg-baqh">4652</td>
+            </tr>
+        </tbody>
+    </table>
+    <p style="text-indent: 0px;">Even at inference, the leap from d16 to d20 shows the scaling tax: almost double the VRAM use, but noticeably richer output quality.</p> 
+    
+    <h3>> Final Thoughts</h3>
+    <p>Training nanochat locally is a journey through technical masochism, calculating electricity bills, and the sheer audacity of trying to out-compute a cloud cluster with a single consumer GPU. Here are the key learning points from my weeks of trainium hell:</p>
+    <blockquote>
+        <p style="text-indent: 0px; font-size:1.05em; color:#6A0DAD">Technical Takeaways:</p>
+        <ul style="color:#6A0DAD">
+            <li><b>First-hand LLM training</b>: I experienced the entire workflow of training a large language model from scratch, from start to finish with customisations.</li>
+            <li><b>Checkpointing is non-negotiable</b>: The original nanochat code doesn't include it, and you'll learn the hard way when your kernel panics 75% through a 3-day training run. Just do checkpointing from the start.</li>
+            <li><b>Model size matters for output quality</b>: d20 significantly outperforms d16, though neither makes for a particularly deep conversationalist.</li>
+            <li><b>Use wandb for live monitoring</b>: Watching live updates while away from your desk is oddly satisfying and mildly anxiety-inducing. ("Is my GPU overheating?!")</li>
+        </ul>
+    </blockquote>
+    <p style="text-indent: 0px;">Other takeaways:</p>
+    <ul>
+        <li><b>Lower cost by training locally</b>: Training locally is basically a high-tech way to keep your room warm in the tropical heat while earning a massive S$0.46 per hour in savings.</li>
+        <li><b>Sleep schedule dictated by epochs</b>: You don’t go to bed when you’re tired; you go to bed when the next checkpoint hits and your anxiety drops by 0.01.</li>
+        <li><b>Emotional attachment to tiny models</b>: You start talking about d16 and d20 like they’re problematic children (and seriously consider spending $1000 for a more obedient and smarter d32).</li>
+        <li><b>New appreciation for cloud pricing</b>: After 229 hours of turning your room into a thermal experiment, suddenly that “US$100 cloud bill” suddenly feels less like a scam and more like a package for your sanity.</li>
+    </ul>
+    <p><i>"So how did the chat models turn out?"</i> you might ask. The pretrained base models were able to produce <a href="/nanochat/extras">these gems</a>, but I can’t say the same after midtraining and SFT. It’s still a mystery, and I’m working on figuring it out. When I do, I might write a sequel — The Chat Evals. (No promises!)</p>
+    <p>With that, I can say I've trained a tiny LLM from scratch on my own machine! ...Well, most of it. Of course, this wouldn't have been possible without the nanochat repo and Big Jeff's compute for the final stretch. </p>
+    <p>Feel free to <a href="mailto:xinweiching@gmail.com">reach out</a> if you have any questions, or you have tried nanochat yourself and would like to share your experience!</p>
+    
+    </section>
+
+    <section class="gallery-container" data-images='[
+      {"src": "d16-d20-wandb.png", "caption": "d16 vs d20 wandb graphs."},
+      {"src": "d20-step1000-evalprompt_resized.jpg", "caption": "Young d20 at its 1000th step in pretraining. Oh, how much it has learnt!"}
+    ]'>
+      <h3>Gallery</h3>
+      <button class="gallery-prev">&#8592;</button>
+      <img class="gallery-img" src="" alt="">
+      <button class="gallery-next">&#8594;</button>
+      <p class="gallery-caption"></p>
+    </section>
+
+    <a href="/" class="back-button">&larr; Back to Main Page</a>
+
+</body>
+</html>
