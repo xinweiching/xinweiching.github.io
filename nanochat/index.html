@@ -17,31 +17,38 @@
     </p>
     <p style="text-indent: 0px;">In this post, I'll be covering:</p>
     <ul>
-        <li><b>Nanochat models at different depths</b>: specifically d16 and d20 (higher depth=more complex model). I couldn’t go too ambitious with this given my humble budget and hardware.</li>
+        <li><b>Nanochat models at different depths</b>: specifically d16 and d20 (higher depth=more complex model). I couldn’t go too ambitious with this given my limited budget and hardware.</li>
         <li><b>Training process</b>: A step-by-step look at the process and the challenges I faced while running the models locally.</li>
         <li><b>Overall costs</b>: A transparent breakdown of how much this little “experiment” actually cost.</li>
     </ul>
     
-    <p style="text-indent: 0px;">I made a short 1 min trailer for fun:</p>
-    <iframe width="80%" height="400px" src="https://www.youtube.com/embed/gCH5_0mQsYw"></iframe>
     <p style="text-indent: 0px;">Click <a href="/nanochat/extras">here</a> if you’re only here for the hilarious tiny-LLM outputs.</p>
     
     <h3>> Summary / Highlights</h3>
-    <p style="text-indent: 0px;">
-        In this months-long journey, I achieved the following:
-    </p>
+    <p style="text-indent: 0px;">In this months-long journey, I achieved the following:</p>
+    <blockquote>
+        <ul style="color:#6A0DAD">
+            <li><b>Successfully trained on resource-constrained hardware</b> for two model depths (d16 and d20) to completion. Well, except for one step where I had to train it on an AWS EC2.</li>
+            <li><b>Implemented checkpointing</b> to safeguard multi-day training runs and prevent loss of training progress.</li>
+            <li><b>Profiled training and inference resource usage</b> (runtime, peak VRAM, model size on disk) and documented the scaling trade-offs between d16 and d20.​</li>
+            <li><b>Measured the practical cost of local training</b> and compared it against a “cloud baseline” to quantify savings.</li>
+        </ul>
+    </blockquote>
+    <p style="text-indent: 0px;">Battle scars and profits:</p>
     <ul>
-    <li>Lost 3 days of progress to a kernel panic because I did not add checkpointing.</li>
-    <li>Turned my bedroom into a sauna for 10 days in a tropical country.</li>
-    <li><s>Saved</s> Earned S$0.46 per hour for training it locally (if you ignore the power bill, GPU depreciation, and sanity loss). </li>
+        <li>Lost 3 days of progress to a kernel panic because I did not add checkpointing.</li>
+        <li>Turned my bedroom into a sauna for 10 days in a tropical country.</li>
+        <li>“Earned” the equivalent of ~S$0.46/hour in avoided cloud spend (if you ignore the GPU depreciation and sanity loss). </li>
     </ul>
+    <p style="text-indent: 0px;">I made a short 1 min trailer for fun:</p>
+    <iframe width="80%" height="400px" src="https://www.youtube.com/embed/gCH5_0mQsYw"></iframe>
     <p style="text-indent: 0px;">
         ...read on to find out how it all happened!
     </p>
-
+    
     <h3>> Specs Used in this Project</h3>
     <p style="text-indent: 0px;">
-        Here are the specs I'll be working with (yes I use arch btw if that's wasn’t obvious enough).
+        Here are the specs I'll be working with (yes I use arch btw if that isn’t obvious enough).
     </p>
     <img src="specs.jpg" class="img70" alt="Specs used in this project">
     <p style="text-indent: 0px;">
@@ -49,41 +56,40 @@
     </p>
 
     <h3>> Training</h3>
-    <p style="text-indent: 0px;">        The graph below shows the time taken to train d20 on the suggested 8×H100 setup compared to my humble GPU.</p>
-    <img src="timetaken-graph-local-vs-cloud.png" class="img50" alt="Time taken graph (local vs cloud)">
-    <p style="text-indent: 0px;">
-        For greater visibility and to make myself feel a little better, here is the same graph log-scaled.
-    </p>
-    <img src="timetaken-graph-local-vs-cloud-logscale.png" class="img50" alt="Time taken graph (local vs cloud)">
-    
     <p style="text-indent: 0px;">The training process comprises of several steps:</p>
     <ul>
         <li><b>Pretrain</b>: The most time-consuming and compute-intensive step. This trains the base transformer model from random initialization on tokens of raw internet text (in this case, HuggingFaceFW/fineweb-edu).</li>
         <li><b>Midtrain</b>: Introduces conversational special tokens, tool use, and multiple-choice reasoning. Also where you can impart <i>a custom personality</i> to your model.</li>
         <li><b>Supervised finetuning (SFT)</b>: The final step. This refines the pretrained model into a chat-capable one.</li>
     </ul>
-    <p style="text-indent: 0px;">With just 12 GB of GPU memory, I’ll be training my models with the monstrous batch size of 1.</p>
+    <p style="text-indent: 0px;">The graph below shows the time taken to train d20 on the suggested 8×H100 setup compared to my humble GPU.</p>
+    <img src="timetaken-graph-local-vs-cloud.png" class="img50" alt="Time taken graph (local vs cloud)">
+    <p style="text-indent: 0px;">For greater visibility and to make myself feel a little better, here is the same graph log-scaled.</p>
+    <img src="timetaken-graph-local-vs-cloud-logscale.png" class="img50" alt="Time taken graph (local vs cloud)">
+    <p><i>"Why does it take so much longer?"</i> With just 12 GB of GPU memory, I could only train d20 at a per-device batch size of 1 without OOMing while the original script for 8xH100 is set at 32.</p>
+    
     
     <h4>>> The Pretraining Experience</h4>
-    <p>The most painful but also most joyous part of this journey. Pretraining is where nanochat eats tokens for breakfast, lunch, and dinner—and it takes its sweet time doing it. We're talking 229 hours (nearly 10 days!) for d20 on my RTX 5070. That's 10 days of sleeping next to my GPU going BRRRRR, 10 days of checking wandb every few hours like a nervous parent. (Also I didn't know it would be 10 days when I started.)</p>
-    <img src="wandb-monitoring.png" alt="Monitoring training on wandb">
-    <p class="img-caption">wandb, my baby monitor. These beautiful graphs were from d20.</p>
+    <p>The most painful but also most joyous part of this journey. Pretraining is where nanochat eats tokens for breakfast, lunch, and dinner—and it takes its sweet time doing it. We're talking 220 hours (nearly 10 days!) for d20 on my RTX 5070. That's 10 days of sleeping next to my GPU going BRRRRR, 10 days of checking wandb every few hours like a nervous parent. (Also I didn't know it would be this long when I started.)</p>
     <p>My very first attempt was d16. I fired up the original training script with great optimism and watched the loss drop for the first few hours. However, 2 days 22 hours in (75% done), the computer had a kernel panic.</p>
     <img src="kernel-panic.jpg" class="img50" alt="Kernel panic!">
-    <p>Everything was gone. No weights, no checkpoints, it's back to square one. Just a log file and the sinking realization that <b>original nanochat code doesn't include checkpointing.</b></p>
+    <p>Everything was gone. No weights, no checkpoints, it's back to square one. Just a log file and the sinking realization that the original nanochat script didn’t ship with checkpointing, which is reasonable since its intended for sane people running ~4-hour jobs… not me leaving it to cook for >72 hours.</p>
     <img src="text-sad.png" class="img50" alt="Crashout.">
     <p class="img-caption">Crashing out. I should've just spent a bit more money for an upgrade.</p>
     <blockquote>
         Lesson #1: When training a large model over multiple days, <i>please</i> do checkpointing.
         <br>Lesson #2: Compute power is king. Do not skimp.
     </blockquote>
-    <p>With checkpointing finally in place, I started the training for d16 again. Seeing the "Finished" tag was a sight for sore eyes. Eventually I trained d20 as well, which miraculously ran for 9 days straight without crashing (hooray!).</p>
+    <p>With checkpointing finally in place which saves the models every 1500 iterations, I started the training for d16 again. Seeing the "Finished" tag was a sight for sore eyes. Eventually I trained d20 as well, which miraculously ran for 9 days straight without crashing (hooray!).</p>
     <img src="success-wandb.png" alt="Successful runs.">
     <p class="img-caption">I did not know joy until I saw these.</p>
+    <img src="base-runs-graphs.png" alt="Monitoring training on wandb">
+    <p class="img-caption">wandb, my baby monitor. These graphs compare the training of d16 and d20.<br>The disk utilisation staircase is the checkpointing!</p>
     <p style="text-indent: 0px;">Pre-training stats for those interested:</p>
     <table class="tg"><thead>
         <tr>
             <th class="tg-amwm">Name</th>
+            <th class="tg-amwm">Batch size</th>
             <th class="tg-amwm">Training time (h)</th>
             <th class="tg-amwm">Peak memory usage (MiB)</th>
             <th class="tg-amwm">Iterations</th>
@@ -92,6 +98,7 @@
         <tbody>
             <tr>
                 <td class="tg-amwm">d16</td>
+                <td class="tg-amwm">1</td>
                 <td class="tg-baqh">88</td>
                 <td class="tg-baqh">5921</td>
                 <td class="tg-baqh">12800</td>
@@ -99,6 +106,7 @@
             </tr>
             <tr>
                 <td class="tg-amwm">d20</td>
+                <td class="tg-amwm">1</td>
                 <td class="tg-baqh">220</td>
                 <td class="tg-baqh">9687</td>
                 <td class="tg-baqh">21400</td>
@@ -206,6 +214,7 @@ assistant: "Oh, my dear friend, I hear you. It sounds like today might be a litt
     <table class="tg"><thead>
         <tr>
         <th class="tg-amwm">Name</th>
+        <th class="tg-amwm">Batch size</th>
         <th class="tg-amwm">Training time (h)</th>
         <th class="tg-amwm">Peak memory usage (MiB)</th>
         <th class="tg-amwm">Iterations</th>
@@ -214,6 +223,7 @@ assistant: "Oh, my dear friend, I hear you. It sounds like today might be a litt
     <tbody>
     <tr>
         <td class="tg-amwm">d16</td>
+        <td class="tg-baqh">1</td>
         <td class="tg-baqh">5</td>
         <td class="tg-baqh">5920</td>
         <td class="tg-baqh">814</td>
@@ -221,6 +231,7 @@ assistant: "Oh, my dear friend, I hear you. It sounds like today might be a litt
     </tr>
     <tr>
         <td class="tg-amwm">d20</td>
+        <td class="tg-baqh">1</td>
         <td class="tg-baqh">8.5</td>
         <td class="tg-baqh">9582</td>
         <td class="tg-baqh">814</td>
@@ -231,65 +242,70 @@ assistant: "Oh, my dear friend, I hear you. It sounds like today might be a litt
 
     <h4>>> Supervised Fine-tuning (SFT)</h4>
     <p>This is the coaching phase where the small LLM practices giving the best possible answers, focusing on tone, accuracy, and politeness.​</p>
-    <p>This is also the shortest stage, d16 took only about half an hour to train. But... I was unable to train d20 locally at this stage for the greatest adversary known to all AI engineers occurred: <b>The OOM</b>. ​Since I can't go any smaller than batch size=1, and I didn't want to modify any parameters that could affect performance, I had to face reality — my GPU simply wasn’t enough.</p> 
+    <p>This is also the shortest stage, d16 took only about half an hour to train. But... I was unable to train d20 locally at this stage for the greatest adversary known to all AI engineers occurred: <b>The OOM</b>.</p> 
+    <img src="sft-runs-list.png" alt="List of SFT attempts on wandb.">
+    <p class="img-caption">List of SFT attempts. I tried.</p>
+    <p>​Since I can't go any smaller than batch size=1, and I didn't want to modify any parameters that could affect performance, I had to face reality — my GPU simply wasn’t enough. (If I'd not skimped and gotten the upgrade to 16GB I'd be able to train it!)</p> 
     <p style="text-indent: 0px;">To the cloud we go.</p> 
     <ul>
         <li><b>EC2 Instance type</b>: g5.xlarge</li>
         <li><b>AMI</b>: Deep Learning OSS Nvidia Driver AMI GPU PyTorch 2.9 (Ubuntu 24.04) 20251227</li>
         <li><b>GPU</b>: NVIDIA A10G</li>
     </ul>
-    <p style="text-indent: 0px;">With these specs I was able to train d20 SFT with a batch size of 2.</p>
+    <p>Chose g5.xlarge because it was the smallest “serious GPU” EC2 step that kept the project aligned with the same <i>constraint-first philosophy</i> as the rest of the work: spend just enough cloud resources to unblock the specific bottleneck, and no more. Practically, the selection was driven by memory math: SFT for d16 took 42% more memory than its midtraining. 9582 x 1.42 ≈ 13600MB peak GPU memory at batch size 1.</p>
+    <p style="text-indent: 0px;">With these specs I was even able to train d20 SFT with a batch size of 2.</p>
     <img src="ec2-nvidiasmi-training.png" alt="Running sft for d20 on EC2 w/ A10G.">
     <p class="img-caption">Yay. More compute.</p>
     <p style="text-indent: 0px;">SFT training stats for those interested:</p>
     <table class="tg"><thead>
         <tr>
-        <th class="tg-amwm">Name</th>
-        <th class="tg-amwm">Batch size</th>
-        <th class="tg-amwm">Training time (h)</th>
-        <th class="tg-amwm">Peak memory usage (MiB)</th>
-        <th class="tg-amwm">Iterations</th>
-    </tr></thead>
-    <tbody>
-    <tr>
-        <td class="tg-amwm">d16 (RTX5070 12GiB)</td>
-        <td class="tg-baqh">1</td>
-        <td class="tg-baqh">0.55</td>
-        <td class="tg-baqh">~8400</td>
-        <td class="tg-baqh">5608</td>
-    </tr>
-    <tr>
-        <td class="tg-amwm">d20 (A10G)</td>
-        <td class="tg-baqh">1</td>
-        <td class="tg-baqh">-</td>
-        <td class="tg-baqh">13600</td>
-        <td class="tg-baqh">701</td>
-    </tr>
-    <tr>
-        <td class="tg-amwm">d20 (A10G)</td>
-        <td class="tg-baqh">2</td>
-        <td class="tg-baqh">0.58</td>
-        <td class="tg-baqh">18596</td>
-        <td class="tg-baqh">701</td>
-    </tr>
-    </tbody>
+            <th class="tg-amwm">Name</th>
+            <th class="tg-amwm">Batch size</th>
+            <th class="tg-amwm">Training time (h)</th>
+            <th class="tg-amwm">Peak memory usage (MiB)</th>
+            <th class="tg-amwm">Iterations</th>
+        </tr></thead>
+        <tbody>
+            <tr>
+                <td class="tg-amwm">d16 (RTX5070 12GiB)</td>
+                <td class="tg-baqh">1</td>
+                <td class="tg-baqh">0.55</td>
+                <td class="tg-baqh">~8400</td>
+                <td class="tg-baqh">5608</td>
+            </tr>
+            <tr>
+                <td class="tg-amwm">d20 (A10G)</td>
+                <td class="tg-baqh">1</td>
+                <td class="tg-baqh">-</td>
+                <td class="tg-baqh">13600</td>
+                <td class="tg-baqh">701</td>
+            </tr>
+            <tr>
+                <td class="tg-amwm">d20 (A10G)</td>
+                <td class="tg-baqh">2</td>
+                <td class="tg-baqh">0.58</td>
+                <td class="tg-baqh">18596</td>
+                <td class="tg-baqh">701</td>
+            </tr>
+        </tbody>
     </table>
+    <p>Woahhhh, <i>why is SFT training consuming so much more memory than both base and mid training?</i> A short explanation is that it is due to fundamental differences in data handling: SFT maintains per-example structure with explicit masking, while base/mid use dense contiguous token streams. Treating each conversation individually and marking which tokens should be learned from (rather than packing everything together) uses more memory.</p>
     
     <h3>> Overall Cost</h3>
-    <p style="text-indent: 0px;">Here’s where we find out whether training locally actually saved me any money.</p>
+    <p style="text-indent: 0px;">Here’s where we find out whether training locally instead of training on 8xH100 actually saves any money.</p>
     <p style="text-indent: 0px;">Let's start with d16.</p>
     <p style="color:#0d6dad; padding-left:20px; font-family:Arial, Helvetica, sans-serif; text-indent: 0px;">
         Total time spent training = 93.5 hours
     <br>Base system during training (estimate) ≈ 175 W
     <br>GPU Power usage during training ≈ 194 W
     <br>Singapore electricity rate (Q4 2025): ~S$0.30/kWh
-    <br>Total cost for d16 = (0.175+0.194) kW x 93.5 h x S$0.30 = <b><i>$10.35</i></b>
+    <br>Total cost for d16 = (0.175+0.194) kW x 93.5 h x S$0.30 = <b><i>S$10.35</i></b>
     </p>
     <p style="text-indent: 0px;">For d20:</p>
     <p style="color:#0d6dad; padding-left:20px; font-family:Arial, Helvetica, sans-serif; text-indent: 0px;">
         Total time spent training = 229 hours
     <br>GPU Power usage during training ≈ 184 W
-    <br>Total cost for d20 = (0.175+0.184) kW x 229 h x S$0.30 = <b><i>$24.66</i></b>
+    <br>Total cost for d20 = (0.175+0.184) kW x 229 h x S$0.30 = <b><i>S$24.66</i></b>
     </p>
     <p style="text-indent: 0px;">Hmm, not bad, as compared to spending USD$100=S$128.41. Here's how much I was essentially earning per hour from training d20 locally:</p>
     <p style="color:#0d6dad; padding-left:20px; font-family:Arial, Helvetica, sans-serif; text-indent: 0px;">
@@ -297,6 +313,7 @@ assistant: "Oh, my dear friend, I hear you. It sounds like today might be a litt
     <br>Hourly wage for waiting = S$103.75 / (229-4) h = <b><i>S$0.46</i></b>
     </p>
     <p style="text-indent: 0px;">So, by turning my bedroom into a furnace for 229 hours, I <s>saved</s> made money at S$0.46 per hour!</p>
+    <p class="mini-note" style="text-indent: 0px;">For the SFT of d20, I spent ~S$5 renting the EC2 instance for 4h (includes environment setup, uploading midtrain d20 model, training, downloading the SFT d20 model).</p>
 
     <h3>> Inference</h3>
     <p style="text-indent: 0px;">Here’s a quick comparison of how much memory each model occupies on disk and the GPU memory required to run a chat session:</p> 
@@ -335,25 +352,11 @@ assistant: "Oh, my dear friend, I hear you. It sounds like today might be a litt
     <p style="text-indent: 0px;">Other takeaways:</p>
     <ul>
         <li><b>Lower cost by training locally</b>: Training locally is basically a high-tech way to keep your room warm in the tropical heat while earning a massive S$0.46 per hour in savings.</li>
-        <li><b>Sleep schedule dictated by epochs</b>: You don’t go to bed when you’re tired; you go to bed when the next checkpoint hits and your anxiety drops by 0.01.</li>
-        <li><b>Emotional attachment to tiny models</b>: You start talking about d16 and d20 like they’re problematic children (and seriously consider spending $1000 for a more obedient and smarter d32).</li>
         <li><b>New appreciation for cloud pricing</b>: After 229 hours of turning your room into a thermal experiment, suddenly that “US$100 cloud bill” suddenly feels less like a scam and more like a package for your sanity.</li>
     </ul>
-    <p><i>"So how did the chat models turn out?"</i> you might ask. The pretrained base models were able to produce <a href="/nanochat/extras">these gems</a>, but I can’t say the same after midtraining and SFT. It’s still a mystery, and I’m working on figuring it out. When I do, I might write a sequel — The Chat Evals. (No promises!)</p>
-    <p>With that, I can say I've trained a tiny LLM from scratch on my own machine! ...Well, most of it. Of course, this wouldn't have been possible without the nanochat repo and Big Jeff's compute for the final stretch. </p>
-    <p>Feel free to <a href="mailto:xinweiching@gmail.com">reach out</a> if you have any questions, or you have tried nanochat yourself and would like to share your experience!</p>
+    <p><i>"So how did the chat models turn out?"</i> you might ask. The pretrained base models were able to produce <a href="/nanochat/extras">these gems</a>, but I can’t say the same after midtraining and SFT. It’s still a mystery, and I’m still figuring it out. When I do, I might write a sequel — <i>The Chat Evals</i>.</p>
+    <p>With that, I can say I've trained a tiny LLM from scratch on my own machine! ...Well, most of it. Of course, this wouldn't have been possible without the nanochat repo and Big Jeff's compute for the final stretch. Feel free to <a href="mailto:xinweiching@gmail.com">reach out</a> if you have any questions, or you have tried nanochat yourself and would like to share your experience!</p>
     
-    </section>
-
-    <section class="gallery-container" data-images='[
-      {"src": "d16-d20-wandb.png", "caption": "d16 vs d20 wandb graphs."},
-      {"src": "d20-step1000-evalprompt_resized.jpg", "caption": "Young d20 at its 1000th step in pretraining. Oh, how much it has learnt!"}
-    ]'>
-      <h3>Gallery</h3>
-      <button class="gallery-prev">&#8592;</button>
-      <img class="gallery-img" src="" alt="">
-      <button class="gallery-next">&#8594;</button>
-      <p class="gallery-caption"></p>
     </section>
 
     <a href="/" class="back-button">&larr; Back to Main Page</a>
