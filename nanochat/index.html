@@ -19,6 +19,7 @@
     <ul>
         <li><b>Nanochat models at different depths</b>: specifically d16 and d20 (higher depth=more complex model). I couldn’t go too ambitious with this given my limited budget and hardware.</li>
         <li><b>Training process</b>: A step-by-step look at the process and the challenges I faced while running the models locally.</li>
+        <li><b>Resource usage during training and inference</b>: revealing the real hardware demands of local tiny LLM training and inference.</li>
         <li><b>Overall costs</b>: A transparent breakdown of how much this little “experiment” actually cost.</li>
     </ul>
     
@@ -62,7 +63,7 @@
         <li><b>Midtrain</b>: Introduces conversational special tokens, tool use, and multiple-choice reasoning. Also where you can impart <i>a custom personality</i> to your model.</li>
         <li><b>Supervised finetuning (SFT)</b>: The final step. This refines the pretrained model into a chat-capable one.</li>
     </ul>
-    <p style="text-indent: 0px;">The graph below shows the time taken to train d20 on the suggested 8×H100 setup compared to my humble GPU.</p>
+    <p style="text-indent: 0px;">The graph below shows the time taken to train d20 on the suggested 8×H100 setup compared to my GPU.</p>
     <img src="timetaken-graph-local-vs-cloud.png" class="img50" alt="Time taken graph (local vs cloud)">
     <p style="text-indent: 0px;">For greater visibility and to make myself feel a little better, here is the same graph log-scaled.</p>
     <img src="timetaken-graph-local-vs-cloud-logscale.png" class="img50" alt="Time taken graph (local vs cloud)">
@@ -80,7 +81,7 @@
         Lesson #1: When training a large model over multiple days, <i>please</i> do checkpointing.
         <br>Lesson #2: Compute power is king. Do not skimp.
     </blockquote>
-    <p>With checkpointing finally in place which saves the models every 1500 iterations, I started the training for d16 again. Seeing the "Finished" tag was a sight for sore eyes. Eventually I trained d20 as well, which miraculously ran for 9 days straight without crashing (hooray!).</p>
+    <p>With checkpointing finally in place which saves the models every 1500 iterations, I started the training for d16 again. Seeing the "Finished" tag was a sight for sore eyes. Eventually I trained d20 as well, which miraculously ran for 9 days straight without crashing (woohoo!).</p>
     <img src="success-wandb.png" alt="Successful runs.">
     <p class="img-caption">I did not know joy until I saw these.</p>
     <img src="base-runs-graphs.png" alt="Monitoring training on wandb">
@@ -241,18 +242,18 @@ assistant: "Oh, my dear friend, I hear you. It sounds like today might be a litt
     </table>
 
     <h4>>> Supervised Fine-tuning (SFT)</h4>
-    <p>This is the coaching phase where the small LLM practices giving the best possible answers, focusing on tone, accuracy, and politeness.​</p>
-    <p>This is also the shortest stage, d16 took only about half an hour to train. But... I was unable to train d20 locally at this stage for the greatest adversary known to all AI engineers occurred: <b>The OOM</b>.</p> 
+    <p>This is the coaching phase where the LLM practices giving the best possible answers, focusing on tone, accuracy, and politeness.​</p>
+    <p>This is also the shortest stage, d16 took only about half an hour to train. But... I was unable to train d20 locally at this stage for the greatest adversary known to all occurred: <b>The OOM</b>.</p> 
     <img src="sft-runs-list.png" alt="List of SFT attempts on wandb.">
     <p class="img-caption">List of SFT attempts. I tried.</p>
-    <p>​Since I can't go any smaller than batch size=1, and I didn't want to modify any parameters that could affect performance, I had to face reality — my GPU simply wasn’t enough. (If I'd not skimped and gotten the upgrade to 16GB I'd be able to train it!)</p> 
+    <p>​Since I can't go any smaller than batch size=1, and I didn't want to modify any parameters that could affect performance, I had to face the reality that my GPU simply wasn’t enough.</p> 
     <p style="text-indent: 0px;">To the cloud we go.</p> 
     <ul>
         <li><b>EC2 Instance type</b>: g5.xlarge</li>
         <li><b>AMI</b>: Deep Learning OSS Nvidia Driver AMI GPU PyTorch 2.9 (Ubuntu 24.04) 20251227</li>
         <li><b>GPU</b>: NVIDIA A10G</li>
     </ul>
-    <p>Chose g5.xlarge because it was the smallest “serious GPU” EC2 step that kept the project aligned with the same <i>constraint-first philosophy</i> as the rest of the work: spend just enough cloud resources to unblock the specific bottleneck, and no more. Practically, the selection was driven by memory math: SFT for d16 took 42% more memory than its midtraining. 9582 x 1.42 ≈ 13600MB peak GPU memory at batch size 1.</p>
+    <p>Chose g5.xlarge because it was the smallest “serious GPU” EC2 step that kept the project aligned with the same <i>constraint-first philosophy</i> as the rest of the work: spend just enough cloud resources to unblock the specific bottleneck, and no more. Practically, the selection was driven by memory math: SFT for d16 took 42% more memory than its midtraining. 9582 x 1.42 ≈ 13600MB peak GPU memory at batch size 1. (If I'd not skimped and gotten the upgrade to 16GB I'd be able to train it!)</p>
     <p style="text-indent: 0px;">With these specs I was even able to train d20 SFT with a batch size of 2.</p>
     <img src="ec2-nvidiasmi-training.png" alt="Running sft for d20 on EC2 w/ A10G.">
     <p class="img-caption">Yay. More compute.</p>
