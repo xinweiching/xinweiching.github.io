@@ -11,8 +11,8 @@
 <body>
   <section class="blog-post">
     <h2>The Nanochat Experience</h2>
-    <p class="date">January 4, 2026</p>
-    <p>We have been blessed by the heavens! Andrej Karpathy released the <a href="https://github.com/karpathy/nanochat">source code</a> that allows <b>anyone to train their own LLM for as little as $100</b>! It’s fully configurable and customizable, so anyone can go from start to finish and experience what it’s like to build a language model from scratch.</p>
+    <p class="date">January 1, 2026</p>
+    <p>We have been blessed by the heavens! Andrej Karpathy released the source code that allows <b>anyone to train their own LLM for as little as $100</b>! It’s fully configurable and customizable, so anyone can go from start to finish and experience what it’s like to build a language model from scratch.</p>
     <p>Naturally, I had to try it. Except… I wasn’t ready to part with $100 (at least not directly) for cloud compute. So I took the masochistic route instead — <b>training it locally on my own GPU</b>.</p>
     </p>
     <p style="text-indent: 0px;">In this post, I'll be covering:</p>
@@ -46,6 +46,14 @@
     <p style="text-indent: 0px;">
         ...read on to find out how it all happened!
     </p>
+
+    <h3>> What is nanochat?</h3>
+    <p><a href="https://github.com/karpathy/nanochat">Nanochat</a> is an open-source project by Andrej Karpathy that makes LLM training accessible to individuals. Built on the Transformer neural network architecture, it provides a <b>fully configurable pipeline to train language models from scratch</b>, starting from random weight initialization all the way to a chat-capable assistant.</p>
+    <p>The training process follows three stages: <b>pretraining</b> (learning language patterns from raw text), <b>midtraining</b> (introducing conversational structure and optional personality customization), and <b>supervised fine-tuning</b> (refining responses for chat interactions).</p>
+    <h4>>> About d16 and d20</h4>
+    <p>In this project, I trained two model configurations at different depths: d16 and d20. The depth parameter refers to the number of transformer layers in the model, which is essentially how many processing layers the neural network uses to understand and generate text.</p>
+    <p><b>Higher depth generally translates to greater model capacity and complexity</b>. A d20 model has more layers than d16, allowing it to potentially capture richer patterns and produce more nuanced outputs. However, this comes at a cost: increased training time and higher memory requirements.</p>
+    <p>I chose d20 specifically to benchmark against 8×H100 GPUs with a reported 4-hour runtime. Given my hardware constraints, d16 and d20 represented the practical ceiling for what I could train locally without running into memory limitations.</p>
     
     <h3>> Specs Used in this Project</h3>
     <p style="text-indent: 0px;">
