@@ -363,9 +363,9 @@ pre {
 
     .tg td,
     .tg th {
-        font-size: 0.85em; /* Slightly smaller text */
+        font-size: 0.80em; /* Slightly smaller text */
         padding: 8px 4px; /* Reduce padding */
-        white-space: nowrap; /* Prevent text wrapping */
+        white-space: normal; /* Prevent text wrapping */
     }
 
     .gallery-container {
