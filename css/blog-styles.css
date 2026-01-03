@@ -172,12 +172,18 @@ section {
 
 .tg .tg-baqh{
     text-align:center;
-    vertical-align:top
+    vertical-align:middle
 }
 
 .tg .tg-amwm{
     font-weight:bold;
     text-align:center;
+    vertical-align:top
+}
+
+.tg .tg-amwmr{
+    font-weight:bold;
+    text-align:right;
     vertical-align:top
 }
 

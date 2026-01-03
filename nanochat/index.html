@@ -13,14 +13,14 @@
     <h2>The Nanochat Experience</h2>
     <p class="date">January 1, 2026</p>
     <p>We have been blessed by the heavens! Andrej Karpathy released the source code that allows <b>anyone to train their own LLM for as little as $100</b>! It’s fully configurable and customizable, so anyone can go from start to finish and experience what it’s like to build a language model from scratch.</p>
-    <p>Naturally, I had to try it. Except… I wasn’t ready to part with $100 (at least not directly) for cloud compute. So I took the masochistic route instead — <b>training it locally on my own GPU</b>.</p>
+    <p>Naturally, I had to try it. Except… I wasn’t ready to part with $100 (at least not directly) for cloud compute. So I took the scenic route instead — <b>training it locally on my own GPU</b>.</p>
     </p>
     <p style="text-indent: 0px;">In this post, I'll be covering:</p>
     <ul>
         <li><b>Nanochat models at different depths</b>: specifically d16 and d20 (higher depth=more complex model). I couldn’t go too ambitious with this given my limited budget and hardware.</li>
         <li><b>Training process</b>: A step-by-step look at the process and the challenges I faced while running the models locally.</li>
-        <li><b>Resource usage during training and inference</b>: revealing the real hardware demands of local tiny LLM training and inference.</li>
-        <li><b>Overall costs</b>: A transparent breakdown of how much this little “experiment” actually cost.</li>
+        <li><b>Resource usage during training and inference</b>: revealing the real hardware demands of tiny LLM training and inference.</li>
+        <li><b>Cost breakdown</b>: Training locally on my single consumer GPU vs the cloud (8xH100 setup).</li>
     </ul>
     
     <p style="text-indent: 0px;">Click <a href="/nanochat/extras">here</a> if you’re only here for the hilarious tiny-LLM outputs.</p>
@@ -53,7 +53,7 @@
     <h4>>> About d16 and d20</h4>
     <p>In this project, I trained two model configurations at different depths: d16 and d20. The depth parameter refers to the number of transformer layers in the model, which is essentially how many processing layers the neural network uses to understand and generate text.</p>
     <p><b>Higher depth generally translates to greater model capacity and complexity</b>. A d20 model has more layers than d16, allowing it to potentially capture richer patterns and produce more nuanced outputs. However, this comes at a cost: increased training time and higher memory requirements.</p>
-    <p>I chose d20 specifically to benchmark against 8×H100 GPUs with a reported 4-hour runtime. Given my hardware constraints, d16 and d20 represented the practical ceiling for what I could train locally without running into memory limitations.</p>
+    <p>I chose d20 specifically to benchmark against 8xH100 GPUs with a reported 4-hour runtime. Given my hardware constraints, d16 and d20 represented the practical ceiling for what I could train locally without running into memory limitations.</p>
     
     <h3>> Specs Used in this Project</h3>
     <p style="text-indent: 0px;">
@@ -71,7 +71,7 @@
         <li><b>Midtrain</b>: Introduces conversational special tokens, tool use, and multiple-choice reasoning. Also where you can impart <i>a custom personality</i> to your model.</li>
         <li><b>Supervised finetuning (SFT)</b>: The final step. This refines the pretrained model into a chat-capable one.</li>
     </ul>
-    <p style="text-indent: 0px;">The graph below shows the time taken to train d20 on the suggested 8×H100 setup compared to my GPU.</p>
+    <p style="text-indent: 0px;">The graph below shows the time taken to train d20 on the suggested 8xH100 setup compared to my GPU.</p>
     <img src="timetaken-graph-local-vs-cloud.png" class="img50" alt="Time taken graph (local vs cloud)">
     <p style="text-indent: 0px;">For greater visibility and to make myself feel a little better, here is the same graph log-scaled.</p>
     <img src="timetaken-graph-local-vs-cloud-logscale.png" class="img50" alt="Time taken graph (local vs cloud)">
@@ -97,7 +97,7 @@
     <p style="text-indent: 0px;">Pre-training stats for those interested:</p>
     <table class="tg"><thead>
         <tr>
-            <th class="tg-amwm">Name</th>
+            <th class="tg-amwm">Model</th>
             <th class="tg-amwm">Batch size</th>
             <th class="tg-amwm">Training time (h)</th>
             <th class="tg-amwm">Peak memory usage (MiB)</th>
@@ -222,7 +222,7 @@ assistant: "Oh, my dear friend, I hear you. It sounds like today might be a litt
     <p style="text-indent: 0px;">Mid-training stats for those interested:</p>
     <table class="tg"><thead>
         <tr>
-        <th class="tg-amwm">Name</th>
+        <th class="tg-amwm">Model</th>
         <th class="tg-amwm">Batch size</th>
         <th class="tg-amwm">Training time (h)</th>
         <th class="tg-amwm">Peak memory usage (MiB)</th>
@@ -268,7 +268,7 @@ assistant: "Oh, my dear friend, I hear you. It sounds like today might be a litt
     <p style="text-indent: 0px;">SFT training stats for those interested:</p>
     <table class="tg"><thead>
         <tr>
-            <th class="tg-amwm">Name</th>
+            <th class="tg-amwm">Model</th>
             <th class="tg-amwm">Batch size</th>
             <th class="tg-amwm">Training time (h)</th>
             <th class="tg-amwm">Peak memory usage (MiB)</th>
@@ -328,8 +328,8 @@ assistant: "Oh, my dear friend, I hear you. It sounds like today might be a litt
     <p style="text-indent: 0px;">Here’s a quick comparison of how much memory each model occupies on disk and the GPU memory required to run a chat session:</p> 
     <table class="tg"><thead>
         <tr>
-            <th class="tg-amwm">Name</th>
-            <th class="tg-amwm">Model size on disk (MiB)</th>
+            <th class="tg-amwm">Model</th>
+            <th class="tg-amwm">Size on disk (MiB)</th>
             <th class="tg-amwm">Inference memory usage (MiB)</th>
         </tr></thead>
         <tbody>
@@ -347,8 +347,51 @@ assistant: "Oh, my dear friend, I hear you. It sounds like today might be a litt
     </table>
     <p style="text-indent: 0px;">Even at inference, the leap from d16 to d20 shows the scaling tax: almost double the VRAM use, but noticeably richer output quality.</p> 
     
+    <h3>> Summary </h3>
+    <p style="text-indent: 0;">Let's sum up by comparing the tiny LLMs.</p>
+    <table class="tg"><thead>
+        <tr>
+            <th class="tg-amwm"></th>
+            <th class="tg-amwm">d16</th>
+            <th class="tg-amwm">d20</th>
+        </tr></thead>
+        <tbody>
+            <tr>
+                <td class="tg-amwmr">Number of parameters</td>
+                <td class="tg-baqh">604M</td>
+                <td class="tg-baqh">1B</td>
+            </tr>
+            <tr>
+                <td class="tg-amwmr">Time to train (h)</td>
+                <td class="tg-baqh">93.5</td>
+                <td class="tg-baqh">229</td>
+            </tr>
+            <tr>
+                <td class="tg-amwmr">Memory needed for full training (MiB)</td>
+                <td class="tg-baqh">~8400</td>
+                <td class="tg-baqh">~13600</td>
+            </tr>
+            <tr>
+                <td class="tg-amwmr">Sample output</td>
+                <td class="tg-baqh">The chemical symbol of gold is Au. The symbol of silver is Ag. The symbol of copper is Cu. The symbol of lead is Pb. The symbol of zinc is Zn. The symbol of platinum is Pt. </td>
+                <td class="tg-baqh">The chemical symbol of gold is Au. Gold is a soft, malleable, and ductile metal. It is a very malleable metal, and it can be hammered, drawn, and shaped into many different shapes.</td>
+            </tr>
+            <tr>
+                <td class="tg-amwmr">Inference memory usage (MiB)</td>
+                <td class="tg-baqh">~2800</td>
+                <td class="tg-baqh">~4700</td>
+            </tr>
+            <tr>
+                <td class="tg-amwmr">Electricity cost</td>
+                <td class="tg-baqh">S$10.35</td>
+                <td class="tg-baqh">S$24.66</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>Overall, <b>d20 buys better language quality with brute force</b>: ~2.5x the training time and ~1.6x the memory footprint compared to d16, in exchange for outputs that are longer, more descriptive, and less loop‑y. If you can afford the extra VRAM and patience, d20 is the more capable tiny model.</p>
+    
     <h3>> Final Thoughts</h3>
-    <p>Training nanochat locally is a journey through technical masochism, calculating electricity bills, and the sheer audacity of trying to out-compute a cloud cluster with a single consumer GPU. Here are the key learning points from my weeks of trainium hell:</p>
+    <p>Training nanochat locally is a journey through technical masochism, calculating electricity bills, and the sheer audacity of trying to out-compute a cloud cluster with a single consumer GPU. Here are the key learning points from my weeks of trainium marathon:</p>
     <blockquote>
         <p style="text-indent: 0px; font-size:1.05em; color:#6A0DAD">Technical Takeaways:</p>
         <ul style="color:#6A0DAD">
@@ -364,7 +407,7 @@ assistant: "Oh, my dear friend, I hear you. It sounds like today might be a litt
         <li><b>New appreciation for cloud pricing</b>: After 229 hours of turning your room into a thermal experiment, suddenly that “US$100 cloud bill” suddenly feels less like a scam and more like a package for your sanity.</li>
     </ul>
     <p><i>"So how did the chat models turn out?"</i> you might ask. The pretrained base models were able to produce <a href="/nanochat/extras">these gems</a>, but I can’t say the same after midtraining and SFT. It’s still a mystery, and I’m still figuring it out. When I do, I might write a sequel — <i>The Chat Evals</i>.</p>
-    <p>With that, I can say I've trained a tiny LLM from scratch on my own machine! ...Well, most of it. Of course, this wouldn't have been possible without the nanochat repo and Big Jeff's compute for the final stretch. Feel free to <a href="mailto:xinweiching@gmail.com">reach out</a> if you have any questions, or you have tried nanochat yourself and would like to share your experience!</p>
+    <p>With that, I can say I've trained a tiny LLM from scratch on my own machine! ...Well, most of it. Of course, this wouldn't have been possible without the nanochat repo and the cloud's compute for the final stretch. Feel free to <a href="mailto:xinweiching@gmail.com">reach out</a> if you have any questions, or you have tried nanochat yourself and would like to share your experience!</p>
     
     </section>
 
