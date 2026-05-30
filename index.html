@@ -1,139 +1,398 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Xin Wei's Portfolio</title>
     <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:300,400,600,700">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
 </head>
+
 <body>
-    <header>
-        <img src="img/profilepicture.jpg" alt="Profile Picture" class="profile-img" style="width:125px;height:125px;">
-        <h1>Xin Wei</h1>
-        <h2>Aspiring AI/ML Engineer</h2>
-        <h3 style="font-size:1em; font-weight: 70;">
-            - i use arch btw. <br>
-            - Enthusiastic Python Walrus Operator...operator.
-        </h3>
-        <div class="btn-gap">
-            <a href="https://www.linkedin.com/in/xin-wei-ching/">LinkedIn</a>
-            <a href="https://github.com/xinweiching">GitHub</a>
+    <header class="profile">
+        <div class="profile-inner">
+            <img src="img/profilepicture.jpg" alt="Profile Picture" class="profile-img">
+            <div class="profile-text">
+                <h1>Xin Wei</h1>
+                <p class="title">Engineer & Creative</p>
+                <p class="bio">
+                    I dabble across tech and the creative space — building systems, tinkering with hardware, making art. Whatever the medium, I'm happiest when something I made brings people together.
+                </p>
+                <p class="tagline">i use arch btw &nbsp;·&nbsp; tiling window managers advocate &nbsp;·&nbsp; ex-microbiologist</p>
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/xin-wei-ching/" target="_blank" rel="noopener noreferrer"><i class="devicon-linkedin-plain"></i> LinkedIn</a>
+                    <a href="https://github.com/xinweiching" target="_blank" rel="noopener noreferrer"><i class="devicon-github-original"></i> GitHub</a>
+                    <a href="mailto:xinweiching@gmail.com"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <rect x="2" y="4" width="20" height="16" rx="2" />
+                            <polyline points="2,4 12,13 22,4" />
+                        </svg> Email</a>
+                </div>
+            </div>
         </div>
     </header>
 
-    <section class="projects">
-        <h3>Projects</h3>
-
-        <!-- Filter Buttons -->
-        <div id="projectFilter" class="filter-buttons">
-            <button class="filter-btn active" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="ai-ml">AI/ML</button>
-            <button class="filter-btn" data-filter="computer-vision">Computer Vision</button>
-            <button class="filter-btn" data-filter="software-developed">Softwares Developed</button>
-            <button class="filter-btn" data-filter="embedded">Embedded Systems</button>
+    <nav class="tab-bar">
+        <div class="tab-bar-inner">
+            <button class="tab active" data-tab="engineering">Engineering</button>
+            <button class="tab" data-tab="creative">Creative</button>
+            <button class="tab" data-tab="blog">Blog</button>
         </div>
-        
-        <!-- Projects List -->
-        <div class="projects-list">
-            <div class="project-item ai-ml computer-vision software-developed">
-                <img src="img/posebaton.jpg" alt="AI Combat Manikin Project" class="project-img">
-                <div>
-                    <h4>AI Combat Manikin <p class="featured">&#11088;Featured</p></h4> 
-                    <p class="skills"> Software Design | Computer Vision | Hardware Integration</p>
-                    <p>Developed a modular AI-driven training system integrating a user interface with a Python backend with Intel RealSense depth cameras for real-time baton tracking and responsive manikin maneuvers.</p>
-                    <div class="buttons-container">
-                        <a href="https://capstoneshowcase.sutd.edu.sg/project/proj-s14-devt-ai-combat-training/" target="_blank" rel="noopener noreferrer" class="showcase-btn">
-                            Capstone Showcase
-                        </a>
-                        <a href="/ai-manikin" class="learn-more-btn">Read More</a>
-                    </div>
-                </div>
-            </div>
-            <div class="project-item ai-ml">
-                <img src="img/nanochat_resized.jpg" alt="Nanochat" class="project-img">
-                <div>
-                    <h4>Exploring Nanochat</h4>
-                    <p class="skills"> LLMs | PyTorch | CLI </p>
-                    <p>Explored Andrej Karpathy's nanochat, where one can train their own LLM for cheap. In this project, I trained and customised models at different depths on my own GPU.</p>
-                    <div class="buttons-container">
-                        <a href="/nanochat" class="learn-more-btn">Read More</a>
-                    </div>
-                </div>
-            </div>
-            <div class="project-item ai-ml software-developed">
-                <img src="img/sutd-chatbot_resized.jpg" alt="SUTD Q&A Chatbot" class="project-img">
-                <div>
-                    <h4>SUTD Q&A Chatbot</h4> 
-                    <p class="skills">HuggingFace | LLMs | RAG</p>
-                    <p>Developed a Retrieval-Augmented Generation (RAG) chatbot prototype using Llama 3.2 to answer SUTD-related questions. The project included building a Python-based pipeline for chunking, embedding, and scoring, as well as designing an automated evaluation system using an LLM-as-a-judge to assess response quality.</p>
-                    <div class="buttons-container">
-                    </div>
-                </div>
-            </div>
-            <div class="project-item embedded">
-                <img src="img/crowdcare-2.png" alt="CrowdCare Project" class="project-img">
-                <div>
-                    <h4>CrowdCare</h4>
-                    <p class="skills"> IoT | K3s | Arduino</p>
-                    <p>
-                        Developed an IoT system for real-time public health monitoring, using HiveMQ and ESP32 modules for data collection and actuator triggers. The system leverages K3s on Raspberry Pi for scalable, automated management of containers.</p>
-                    <div class="buttons-container">
-                        <a href="https://github.com/xinweiching/CrowdCare" target="_blank" rel="noopener noreferrer" class="github-btn">
-                            <img src="img/Github-darkmode.png" alt="GitHub Icon"> GitHub Repo
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="project-item computer-vision software-developed">
-                <img src="img/itdd-gui.png" alt="ITDD Project" class="project-img">
-                <div>
-                    <h4>Interlocking Tiles Defect Detection GUI</h4>
-                    <p class="skills">Computer Vision | Python | YOLOv8 </p>
-                    <p>A no-code interface leveraging YOLOv8 for efficient defect detection.</p>
-                    <div class="buttons-container">
-                        <a href="https://github.com/xinweiching/ITDD-GUI" target="_blank" rel="noopener noreferrer" class="github-btn">
-                            <img src="img/Github-darkmode.png" alt="GitHub Icon"> GitHub Repo
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="project-item computer-vision">
-                <img src="img/cv-proj.png" alt="Road Sign Detection System" class="project-img">
-                <div>
-                    <h4>Road Sign Detection System</h4>
-                    <p class="skills">Computer Vision | PyTorch |  OpenCV</p>
-                    <p>A robust solution designed to recognize Singapore road signs for autonomous vehicles.</p>
-                    <div class="buttons-container">
-                        <a href="https://github.com/xinweiching/SG-Road-Signs-Detection" target="_blank" rel="noopener noreferrer" class="github-btn">
-                            <img src="img/Github-darkmode.png" alt="GitHub Icon"> GitHub Repo
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="project-item embedded">
-                <img src="img/pixel-run_resized.jpg" alt="Pixel Run Project" class="project-img">
-                <div>
-                    <h4>Pixel Run</h4>
-                    <p class="skills"> FPGA | Lucid | Digital Logic Design</p>
-                    <p>
-                        Hardware-based endless runner game fully implemented on FPGA using the Lucid hardware description language. PixelRun features real-time graphics rendered via VGA output, responsive player controls, and obstacle generation—all handled in hardware without a CPU.</p>                    <div class="buttons-container">
-                        <a href="https://github.com/xinweiching/50.002-PixelRun/tree/main" target="_blank" rel="noopener noreferrer" class="github-btn">
-                            <img src="img/Github-darkmode.png" alt="GitHub Icon"> GitHub Repo
-                        </a>
-                        <a href="/pixel-run" class="learn-more-btn">Learn More</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    </nav>
 
-    <section class="contact">
-        <h3>Contact</h3>
-        <p>Email: xinweiching@gmail.com</p>
-    </section>
+    <main class="content-area">
+
+        <!-- ENGINEERING TAB -->
+        <section id="engineering" class="tab-section active">
+            <div class="section-card">
+                <h3 class="section-header">Core Beliefs</h3>
+                <ul class="beliefs-list">
+                    <li><strong>Own Your Understanding</strong> — AI is a powerful accelerant, but outsourcing comprehension is how technical debt accumulates silently. Engineers who truly understand their systems, not just their outputs, are the ones who can actually fix them.</li>
+                    <li><strong>Engineers Are Bridges</strong> — Technology only matters when it reaches people. The real-world work of translating between human needs and technical systems isn't something AI can substitute for as it requires judgment, context, and accountability.</li>
+                    <li><strong>Hardware Grounds Software</strong> — Working at the silicon level keeps one honest about what computation actually costs. Every abstraction leaks eventually; knowing what's underneath makes one a better engineer at every layer.</li>
+                    <li><strong>Open Source as a Responsibility</strong> — The tools that matter most are built in the open. Giving back to the community is part of the deal.</li>
+                </ul>
+
+                <h3 class="section-header">Skills</h3>
+                <div class="skills-section">
+                    <div class="skills-group">
+                        <span class="skills-group-label">Languages</span>
+                        <div class="skills-strip">
+                            <div class="skill-chip"><i class="devicon-python-plain colored"></i><span>Python</span></div>
+                            <div class="skill-chip"><i class="devicon-cplusplus-plain colored"></i><span>C++</span></div>
+                            <div class="skill-chip"><i class="devicon-javascript-plain colored"></i><span>JavaScript</span></div>
+                            <div class="skill-chip"><i class="devicon-java-plain colored"></i><span>Java</span></div>
+                            <div class="skill-chip"><i class="devicon-postgresql-plain colored"></i><span>SQL</span></div>
+                        </div>
+                    </div>
+                    <div class="skills-group">
+                        <span class="skills-group-label">Libraries</span>
+                        <div class="skills-strip">
+                            <div class="skill-chip"><i class="devicon-pytorch-original colored"></i><span>PyTorch</span></div>
+                            <div class="skill-chip"><i class="devicon-opencv-plain colored"></i><span>OpenCV</span></div>
+                            <div class="skill-chip"><img src="img/semantic-kernel-icon.png" alt="Semantic Kernel"><span>Semantic Kernel</span></div>
+                            <div class="skill-chip"><i class="devicon-svelte-plain colored"></i><span>Svelte</span></div>
+                        </div>
+                    </div>
+                    <div class="skills-group">
+                        <span class="skills-group-label">Tools</span>
+                        <div class="skills-strip">
+                            <div class="skill-chip"><i class="devicon-git-plain colored"></i><span>Git</span></div>
+                            <div class="skill-chip"><i class="devicon-docker-plain colored"></i><span>Docker</span></div>
+                            <div class="skill-chip"><i class="devicon-linux-plain"></i><span>Linux</span></div>
+                            <div class="skill-chip"><i class="devicon-kubernetes-plain colored"></i><span>Kubernetes</span></div>
+                            <div class="skill-chip"><img src="img/nsight-systems-icon.png" alt="Nsight Systems"><span>Nsight Systems</span></div>
+                        </div>
+                    </div>
+                    <div class="skills-group">
+                        <span class="skills-group-label">Others</span>
+                        <div class="skills-strip">
+                            <div class="skill-chip"><i class="devicon-arduino-plain colored"></i><span>Arduino</span></div>
+                            <div class="skill-chip"><img src="img/rhino-icon.png" alt="Rhino"><span>Rhino</span></div>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="section-header">Certifications</h3>
+                <div class="certifications-list">
+                    <div class="cert-item">
+                        <i class="devicon-amazonwebservices-plain-wordmark colored cert-icon"></i>
+                        <div class="cert-details">
+                            <span class="cert-code">SAA-C03</span>
+                            <span class="cert-name">AWS Certified Solutions Architect – Associate</span>
+                            <span class="cert-date">Mar 2026</span>
+                        </div>
+                    </div>
+                    <div class="cert-item">
+                        <i class="devicon-googlecloud-plain colored cert-icon"></i>
+                        <div class="cert-details">
+                            <span class="cert-code">GCP MLE</span>
+                            <span class="cert-name">Google Cloud Professional Machine Learning Engineer</span>
+                            <span class="cert-date">Jan 2026</span>
+                        </div>
+                    </div>
+                    <div class="cert-item">
+                        <i class="devicon-amazonwebservices-plain-wordmark colored cert-icon"></i>
+                        <div class="cert-details">
+                            <span class="cert-code">MLS-C01</span>
+                            <span class="cert-name">AWS Certified Machine Learning – Specialty</span>
+                            <span class="cert-date">Dec 2025</span>
+                        </div>
+                    </div>
+                    <div class="cert-item">
+                        <i class="devicon-azure-plain colored cert-icon"></i>
+                        <div class="cert-details">
+                            <span class="cert-code">AI-102</span>
+                            <span class="cert-name">Microsoft Azure AI Engineer Associate</span>
+                            <span class="cert-date">Dec 2025</span>
+                        </div>
+                    </div>
+                    <div class="cert-item">
+                        <img src="img/nvidia-icon.png" alt="nvidia" class="cert-icon">
+                        <div class="cert-details">
+                            <span class="cert-name">Accelerated Computing in Modern CUDA C++</span>
+                            <span class="cert-date">Feb 2026</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3 class="section-header">Projects</h3>
+                <div id="projectFilter" class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="ai-ml">AI/ML</button>
+                    <button class="filter-btn" data-filter="computer-vision">Computer Vision</button>
+                    <button class="filter-btn" data-filter="software-developed">Software</button>
+                    <button class="filter-btn" data-filter="embedded">Embedded Systems</button>
+                </div>
+
+                <div class="projects-list">
+                    <div class="project-item ai-ml computer-vision software-developed">
+                        <img src="img/posebaton.jpg" alt="AI Combat Manikin" class="project-img">
+                        <div>
+                            <h4>AI Combat Manikin <span class="featured">&#11088; Featured</span></h4>
+                            <p class="skills">Software Design | Computer Vision | Hardware Integration</p>
+                            <p>Developed a modular AI-driven training system integrating a user interface with a Python backend with Intel RealSense depth cameras for real-time baton tracking and responsive manikin maneuvers.</p>
+                            <div class="buttons-container">
+                                <a href="https://capstoneshowcase.sutd.edu.sg/project/proj-s14-devt-ai-combat-training/" target="_blank" rel="noopener noreferrer" class="showcase-btn">Capstone Showcase</a>
+                                <a href="/ai-manikin" class="learn-more-btn">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-item ai-ml">
+                        <img src="img/nanochat.png" alt="Nanochat" class="project-img">
+                        <div>
+                            <h4>Exploring Nanochat</h4>
+                            <p class="skills">LLMs | PyTorch | CLI</p>
+                            <p>Explored Andrej Karpathy's nanochat, where one can train their own LLM for cheap. I trained and customised models at different depths on my own GPU.</p>
+                            <div class="buttons-container">
+                                <a href="/nanochat" class="learn-more-btn">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-item ai-ml software-developed">
+                        <img src="img/sutd-chatbot_resized.jpg" alt="SUTD Q&A Chatbot" class="project-img">
+                        <div>
+                            <h4>SUTD Q&A Chatbot</h4>
+                            <p class="skills">HuggingFace | LLMs | RAG</p>
+                            <p>Developed a Retrieval-Augmented Generation (RAG) chatbot prototype using Llama 3.2 to answer SUTD-related questions, with an LLM-as-a-judge evaluation system.</p>
+                            <div class="buttons-container"></div>
+                        </div>
+                    </div>
+                    <div class="project-item embedded">
+                        <img src="img/crowdcare-2.png" alt="CrowdCare" class="project-img">
+                        <div>
+                            <h4>CrowdCare</h4>
+                            <p class="skills">IoT | K3s | Arduino</p>
+                            <p>IoT system for real-time public health monitoring using HiveMQ and ESP32 modules. Leverages K3s on Raspberry Pi for scalable, automated container management.</p>
+                            <div class="buttons-container">
+                                <a href="https://github.com/xinweiching/CrowdCare" target="_blank" rel="noopener noreferrer" class="github-btn">
+                                    <img src="img/Github-darkmode.png" alt="GitHub Icon"> GitHub Repo
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-item computer-vision software-developed">
+                        <img src="img/itdd-gui.png" alt="ITDD" class="project-img">
+                        <div>
+                            <h4>Interlocking Tiles Defect Detection GUI</h4>
+                            <p class="skills">Computer Vision | Python | YOLOv8</p>
+                            <p>A no-code interface leveraging YOLOv8 for efficient defect detection.</p>
+                            <div class="buttons-container">
+                                <a href="https://github.com/xinweiching/ITDD-GUI" target="_blank" rel="noopener noreferrer" class="github-btn">
+                                    <img src="img/Github-darkmode.png" alt="GitHub Icon"> GitHub Repo
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-item computer-vision">
+                        <img src="img/cv-proj.png" alt="Road Sign Detection" class="project-img">
+                        <div>
+                            <h4>Road Sign Detection System</h4>
+                            <p class="skills">Computer Vision | PyTorch | OpenCV</p>
+                            <p>A robust solution for recognising Singapore road signs for autonomous vehicles.</p>
+                            <div class="buttons-container">
+                                <a href="https://github.com/xinweiching/SG-Road-Signs-Detection" target="_blank" rel="noopener noreferrer" class="github-btn">
+                                    <img src="img/Github-darkmode.png" alt="GitHub Icon"> GitHub Repo
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-item embedded">
+                        <img src="img/pixel-run_resized.jpg" alt="Pixel Run" class="project-img">
+                        <div>
+                            <h4>Pixel Run</h4>
+                            <p class="skills">FPGA | Lucid | Digital Logic Design</p>
+                            <p>Hardware-based endless runner game fully implemented on FPGA using Lucid HDL. Real-time VGA graphics, responsive controls, and obstacle generation — all in hardware, no CPU.</p>
+                            <div class="buttons-container">
+                                <a href="https://github.com/xinweiching/50.002-PixelRun/tree/main" target="_blank" rel="noopener noreferrer" class="github-btn">
+                                    <img src="img/Github-darkmode.png" alt="GitHub Icon"> GitHub Repo
+                                </a>
+                                <a href="/pixel-run" class="learn-more-btn">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CREATIVE TAB -->
+        <section id="creative" class="tab-section">
+            <div class="section-card">
+                <h3 class="section-header">:D</h3>
+                <p class="creative-blurb">Coming soon. Here I reminisce about my crafty endeavours. Every piece here is made by hand, no generative AI.</p>
+                <h3 class="section-header">Skills</h3>
+                <div class="skills-flat">
+                    <div class="skill-chip"><img src="img/procreate-icon.png" alt="Procreate"><span>Procreate</span></div>
+                    <div class="skill-chip"><img src="img/davinci-resolve-icon.png" alt="DaVinci Resolve"><span>DaVinci Resolve</span></div>
+                    <div class="skill-chip"><img src="img/twinmotion-icon.png" alt="Twinmotion"><span>Twinmotion</span></div>
+                    <div class="skill-chip"><i class="devicon-premierepro-plain colored"></i><span>Premiere Pro</span></div>
+                    <div class="skill-chip"><i class="devicon-aftereffects-plain colored"></i><span>After Effects</span></div>
+                    <div class="skill-chip"><img src="img/flash-icon.png" alt="Flash"><span>Flash</span></div>
+                </div>
+
+                <h3 class="section-header">Showcase</h3>
+                <div class="creative-grid">
+                    <a href="/sutd-wth2023" class="creative-card" data-category="event-design">
+                        <div class="creative-card" data-category="event-design">
+                            <div class="creative-card__bg creative-card__bg--event-design"></div>
+                            <div class="creative-card__overlay">
+                                <span class="creative-card__badge">Event Design</span>
+                                <div class="creative-card__footer">
+                                    <span class="creative-card__title">What The Hack 2023</span>
+                                    <span class="creative-card__cta">&#x1F517; &#x2197;</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="/the-boy-sits-down-to-write-a-poem" class="creative-card" data-category="costume-design">
+                        <div class="creative-card" data-category="costume-design">
+                            <div class="creative-card__bg creative-card__bg--costume-design"></div>
+                            <div class="creative-card__overlay">
+                                <span class="creative-card__badge">Costume Design</span>
+                                <div class="creative-card__footer">
+                                    <span class="creative-card__title">mysterious creature</span>
+                                    <span class="creative-card__cta">&#x1F517; &#x2197;</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="creative-card" data-category="digital-art">
+                        <div class="creative-card__bg creative-card__bg--digital-art"></div>
+                        <div class="creative-card__overlay">
+                            <span class="creative-card__badge">Digital Art</span>
+                            <div class="creative-card__footer">
+                                <span class="creative-card__title">Deadlock (2023)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="creative-card" data-category="digital-art">
+                        <div class="creative-card__bg creative-card__bg--digital-art"></div>
+                        <div class="creative-card__overlay">
+                            <span class="creative-card__badge">Digital Art</span>
+                            <div class="creative-card__footer">
+                                <span class="creative-card__title">The Smudger (2021)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="creative-card" data-category="digital-art">
+                        <div class="creative-card__bg creative-card__bg--digital-art"></div>
+                        <div class="creative-card__overlay">
+                            <span class="creative-card__badge">Digital Art</span>
+                            <div class="creative-card__footer">
+                                <span class="creative-card__title">some bird (2019)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="creative-card" data-category="digital-art">
+                        <div class="creative-card__bg creative-card__bg--digital-art"></div>
+                        <div class="creative-card__overlay">
+                            <span class="creative-card__badge">Digital Art</span>
+                            <div class="creative-card__footer">
+                                <span class="creative-card__title">photo-study-1 (2019)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="creative-card" data-category="animation">
+                        <div class="creative-card__bg creative-card__bg--animation"></div>
+                        <div class="creative-card__overlay">
+                            <span class="creative-card__badge">Animation</span>
+                            <div class="creative-card__footer">
+                                <span class="creative-card__title">Nunu & Willump (2019)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="creative-card" data-category="animation">
+                        <div class="creative-card__bg creative-card__bg--animation"></div>
+                        <div class="creative-card__overlay">
+                            <span class="creative-card__badge">Animation</span>
+                            <div class="creative-card__footer">
+                                <span class="creative-card__title">SDMA 2017</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="creative-card" data-category="leathercraft">
+                        <div class="creative-card__bg creative-card__bg--leathercraft"></div>
+                        <div class="creative-card__overlay">
+                            <span class="creative-card__badge">Leathercraft</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BLOG TAB -->
+        <section id="blog" class="tab-section">
+            <div class="section-card">
+                <ul class="blog-list">
+                    <li class="blog-entry">
+                        <a href="/nanochat" class="blog-link">
+                            <div class="blog-thumb" style="background-image: url(img/nanochat.png)"></div>
+                            <div class="blog-content">
+                                <div class="blog-meta">
+                                    <span class="blog-date">Jan 2026</span>
+                                    <span class="blog-tag">Engineering</span>
+                                </div>
+                                <h3 class="blog-title">Exploring Nanochat</h3>
+                                <p class="blog-excerpt">Training small LLMs on my own GPU using Andrej Karpathy's nanochat: what I learned, what broke, and what surprised me.</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="blog-entry">
+                        <a href="/ai-manikin" class="blog-link">
+                            <div class="blog-thumb" style="background-image: url(img/manikin-demo.jpg)"></div>
+                            <div class="blog-content">
+                                <div class="blog-meta">
+                                    <span class="blog-date">Apr 2025</span>
+                                    <span class="blog-tag">Engineering</span>
+                                </div>
+                                <h3 class="blog-title">AI Combat Manikin</h3>
+                                <p class="blog-excerpt">Building a modular AI-driven training system with Intel RealSense cameras for real-time baton tracking and responsive manikin maneuvers.</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="blog-entry">
+                        <a href="/pixel-run" class="blog-link">
+                            <div class="blog-thumb" style="background-image: url(img/pixel-run_resized.jpg)"></div>
+                            <div class="blog-content">
+                                <div class="blog-meta">
+                                    <span class="blog-date">Dec 2024</span>
+                                    <span class="blog-tag">Engineering</span>
+                                </div>
+                                <h3 class="blog-title">Pixel Run</h3>
+                                <p class="blog-excerpt">Designing and building a hardware-based endless runner game on FPGA, fully in Lucid HDL with VGA output — no CPU involved.</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+    </main>
 
     <script src="scripts/filter-projects.js"></script>
 
 </body>
+
 </html>
