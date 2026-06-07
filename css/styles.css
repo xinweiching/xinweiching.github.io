@@ -164,6 +164,29 @@ body {
     margin: 0 0 14px 0;
 }
 
+/* ===== About Blurb ===== */
+.about-blurb {
+    margin: 0 0 28px 0;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #F0E8FA;
+}
+
+.about-blurb p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #444;
+    margin: 0 0 10px 0;
+}
+
+.about-blurb p:last-child {
+    margin-bottom: 0;
+}
+
+.kw {
+    color: #6B47B8;
+    font-weight: 600;
+}
+
 /* ===== Core Beliefs ===== */
 .beliefs-list {
     list-style: none;
@@ -223,11 +246,19 @@ body {
     gap: 2px;
 }
 
-.cert-code {
-    font-size: 0.75rem;
+.cert-domain {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
     font-weight: 700;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.05em;
     color: #6B47B8;
+    border: 1.5px solid #6B47B8;
+    border-radius: 999px;
+    padding: 1px 8px;
+    background: transparent;
+    width: fit-content;
 }
 
 .cert-name {
@@ -513,12 +544,25 @@ body {
     transform: scale(1.04);
 }
 
-.creative-card__bg--animation      { background: linear-gradient(160deg, #2D0057 0%, #6A0DAD 50%, #C4A8F0 100%); }
-.creative-card__bg--digital-art    { background: linear-gradient(135deg, #4A0080 0%, #9B59B6 60%, #D7C3F7 100%); }
-.creative-card__bg--visual-effects { background: linear-gradient(200deg, #1A0035 0%, #6A0DAD 40%, #FF9EEB 100%); }
-.creative-card__bg--costume-design { background: linear-gradient(120deg, #3D007A 0%, #8B5CF6 55%, #E0C8FF 100%); }
-.creative-card__bg--event-design   { background: linear-gradient(170deg, #23022E 0%, #7C3AED 50%, #C4A8F0 100%); }
-.creative-card__bg--leathercraft   { background: linear-gradient(145deg, #1A0A00 0%, #6B3A1F 45%, #C4875A 100%); }
+.creative-card__bg--animation      { background-image: linear-gradient(160deg, #2D0057 0%, #6A0DAD 50%, #C4A8F0 100%); }
+.creative-card__bg--digital-art    { background-image: linear-gradient(135deg, #4A0080 0%, #9B59B6 60%, #D7C3F7 100%); }
+.creative-card__bg--visual-effects { background-image: linear-gradient(200deg, #1A0035 0%, #6A0DAD 40%, #FF9EEB 100%); }
+.creative-card__bg--costume-design { background-image: linear-gradient(120deg, #3D007A 0%, #8B5CF6 55%, #E0C8FF 100%); }
+.creative-card__bg--event-design   { background-image: linear-gradient(170deg, #23022E 0%, #7C3AED 50%, #C4A8F0 100%); }
+
+.creative-card__bg--img-swap { background-image: var(--img-default); }
+.creative-card__bg--img-swap::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: var(--img-hover);
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+.creative-card:hover .creative-card__bg--img-swap::after { opacity: 1; }
+.creative-card__bg--leathercraft   { background-image: linear-gradient(145deg, #1A0A00 0%, #6B3A1F 45%, #C4875A 100%); }
 
 .creative-card__overlay {
     position: absolute;
@@ -651,6 +695,11 @@ body {
     padding: 2px 8px;
     border-radius: 10px;
     font-weight: 700;
+}
+
+.blog-tag[data-tag="creative"] {
+    background-color: #E8F0FF;
+    color: #1A5DC7;
 }
 
 .blog-title {

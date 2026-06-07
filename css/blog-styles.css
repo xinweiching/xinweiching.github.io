@@ -47,6 +47,11 @@ h4 {
     border-radius: 1px;
 }
 
+.kw {
+    color: #6B47B8;
+    font-weight: 600;
+}
+
 section {
     padding: 50px 20px;
     text-align: center;
@@ -138,6 +143,10 @@ section {
 
 .blog-post .img70 {
     width: 70%; 
+}
+
+.blog-post .img100 {
+    width: 100%; 
 }
 
 .tg  {
