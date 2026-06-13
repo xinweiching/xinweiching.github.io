@@ -1,0 +1,43 @@
+:root {
+    /* Colours */
+    --color-primary:         #6A0DAD;
+    --color-primary-dark:    #510b83;
+    --color-secondary:       #6B47B8;
+    --color-text:            #23022E;
+    --color-text-stronger:   #333;
+    --color-text-mid:        #555;
+    --color-text-light:      #888;
+    --color-text-muted:      #999;
+    --color-text-body:       #444;
+    --color-bg:              #FAFAFA;
+    --color-bg-white:        #FFF;
+    --color-bg-purple-pale:  #FAF7FF;
+    --color-bg-purple-light: #EDE0FF;
+    --color-bg-tag:          #F3E8FF;
+    --color-border:          #F0E8FA;
+    --color-border-mid:      #E0D0F7;
+    --color-accent-purple:   #C4A8F0;
+    --color-accent-blue:     #3193d9;
+    --color-accent-blue-dk:  #1d6fa9;
+    --color-accent-gold:     #db9f36;
+
+    /* Typography */
+    --font:      "Raleway", sans-serif;
+    --lh-normal: 1.6;
+
+    /* Spacing / layout */
+    --section-gap: 28px;
+    --section-pad: 24px;
+    --max-w:       860px;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.10);
+    --shadow-md: 0 2px 8px rgba(0,0,0,0.08);
+    --shadow-lg: 0 4px 12px rgba(106,13,173,0.15);
+}
+
+/* Shared utility — keyword highlight used across main and blog pages */
+.kw {
+    color: var(--color-secondary);
+    font-weight: 600;
+}
