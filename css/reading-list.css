@@ -1,0 +1,237 @@
+@import './vars.css';
+
+/* Override blog-styles.css defaults */
+.blog-post h2 {
+    text-align: left;
+}
+
+.blog-post h5 {
+    font-size: 1.05em;
+    font-weight: 400;
+    color: var(--color-text);
+    text-align: left;
+    margin-top: 18px;
+    margin-bottom: 4px;
+}
+
+.blog-post p {
+    text-indent: 0;
+}
+
+/* (0,2,1) beats .blog-post p (0,1,1) for indent/align */
+.reading-post .reading-card p {
+    text-indent: 0;
+    text-align: left;
+}
+
+/* (0,2,1) same specificity, later in file wins the cascade tie */
+.reading-post p.reading-card__rec {
+    color: var(--color-secondary);
+}
+
+/* Filter buttons */
+.reading-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 4px 0 20px;
+}
+
+.reading-filter-btn {
+    background: transparent;
+    border: 1px solid var(--color-primary);
+    color: var(--color-primary);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    cursor: pointer;
+    font-family: var(--font);
+    transition: background 0.15s, color 0.15s;
+}
+
+.reading-filter-btn.active,
+.reading-filter-btn:hover {
+    background: var(--color-primary);
+    color: #fff;
+}
+
+/* Difficulty filter */
+.reading-difficulty-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 4px 0 20px;
+}
+
+.reading-difficulty-btn {
+    background: transparent;
+    border: 1px solid var(--color-accent-blue);
+    color: var(--color-accent-blue);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    cursor: pointer;
+    font-family: var(--font);
+    transition: background 0.15s, color 0.15s;
+}
+
+.reading-difficulty-btn.active,
+.reading-difficulty-btn:hover {
+    background: var(--color-accent-blue);
+    color: #fff;
+}
+
+/* Reading card */
+.reading-card {
+    background: var(--color-bg-purple-pale);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+    text-align: left;
+}
+
+.reading-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.reading-card__title-block {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 4px;
+}
+
+.reading-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+}
+
+.reading-card__title {
+    font-weight: 500;
+    color: var(--color-text);
+    line-height: 1.4;
+}
+
+/* Tags */
+.reading-tag {
+    font-size: 0.75em;
+    background-color: var(--color-bg-tag);
+    color: var(--color-primary);
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 700;
+    display: inline-block;
+    align-self: flex-start;
+}
+
+.reading-tag[data-tag="ai-world"] {
+    background-color: #E8F0FF;
+    color: #1A5DC7;
+}
+
+.reading-tag[data-tag="others"] {
+    background-color: #F0F0F0;
+    color: #555;
+}
+
+.reading-tag--difficulty {
+    background-color: #E3F2FC;
+    color: var(--color-accent-blue-dk);
+}
+
+/* Primary Read button — higher specificity to beat .blog-post a */
+.blog-post .reading-link-btn {
+    background: var(--color-primary);
+    color: #fff;
+    border: none;
+    padding: 5px 14px;
+    border-radius: 4px;
+    font-size: 0.82em;
+    white-space: nowrap;
+    text-decoration: none;
+    transition: background 0.15s, transform 0.1s;
+    flex-shrink: 0;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.blog-post .reading-link-btn:hover {
+    background: var(--color-primary-dark);
+    color: #fff;
+    transform: scale(1.04);
+}
+
+.reading-card__date {
+    font-size: 0.78em;
+    color: var(--color-text-light);
+    margin-top: 2px;
+}
+
+.reading-card__desc {
+    font-size: 0.9em;
+    color: var(--color-text-mid);
+    margin: 10px 0 0 0;
+}
+
+.reading-card__rec {
+    font-size: 0.85em;
+    color: var(--color-secondary);
+    margin: 8px 0 0 0;
+    padding-left: 10px;
+    border-left: 2px solid var(--color-accent-purple);
+}
+
+.reading-card__toggle {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .reading-card__header {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .reading-link-btn {
+        align-self: flex-start;
+    }
+
+    .reading-card__toggle {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+        background: none;
+        border: none;
+        color: var(--color-text-light);
+        font-size: 0.8em;
+        font-family: var(--font);
+        cursor: pointer;
+        padding: 8px 0 0;
+        white-space: nowrap;
+    }
+
+    .reading-card__toggle::before,
+    .reading-card__toggle::after {
+        content: '';
+        flex: 1;
+        border-top: 1px solid var(--color-border-mid);
+    }
+
+    .reading-card__body {
+        display: none;
+    }
+
+    .reading-card.expanded .reading-card__body {
+        display: block;
+    }
+
+    .reading-card.expanded .reading-card__toggle {
+        color: var(--color-text-muted);
+    }
+}

@@ -197,7 +197,7 @@ body {
 .interests-list dt {
     font-size: 0.9rem;
     font-style: italic;
-    color: var(--color-text-stronger);
+    color: var(--color-primary);
     white-space: nowrap;
 }
 

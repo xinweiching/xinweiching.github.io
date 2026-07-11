@@ -5,13 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Xin Wei's Portfolio - Reading List</title>
     <link rel="stylesheet" href="../css/blog-styles.css">
+    <link rel="stylesheet" href="../css/reading-list.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 </head>
 <body>
-  <section class="blog-post">
-    <h2>Reading List</h2>
+  <section class="blog-post reading-post">
+    <h2 style="text-align: center;">Reading List</h2>
     <p class="date">Last updated June 2026</p>
     <p>My favourite reads on tech and the creative world — articles, papers, and essays worth revisiting.</p>
+
+    <h5>Filters</h5>
+    <div class="reading-filter">
+      <button class="reading-filter-btn active" data-filter="all">All</button>
+      <button class="reading-filter-btn" data-filter="mlops">MLOps</button>
+      <button class="reading-filter-btn" data-filter="ai-world">AI & the World</button>
+      <button class="reading-filter-btn" data-filter="others">Others</button>
+    </div>
+    <div class="reading-difficulty-filter">
+      <button class="reading-difficulty-btn active" data-difficulty="all">All</button>
+      <button class="reading-difficulty-btn" data-difficulty="easy">Easy</button>
+      <button class="reading-difficulty-btn" data-difficulty="technical">Technical</button>
+    </div>
+
+    <div class="reading-card" data-category="mlops" data-difficulty="easy technical">
+      <div class="reading-card__header">
+        <div class="reading-card__title-block">
+          <div class="reading-card__tags">
+            <span class="reading-tag" data-tag="mlops">MLOps</span>
+            <span class="reading-tag reading-tag--difficulty" data-difficulty="easy">Easy</span>
+            <span class="reading-tag reading-tag--difficulty" data-difficulty="technical">Technical</span>
+          </div>
+          <span class="reading-card__title">Machine Learning: The High-Interest Credit Card of Technical Debt</span>
+          <span class="reading-card__date">Sculley et al. &nbsp;·&nbsp; 2015</span>
+        </div>
+        <a href="https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/43146.pdf"
+           class="reading-link-btn" target="_blank" rel="noopener noreferrer">📄 Link</a>
+      </div>
+      <button class="reading-card__toggle" aria-expanded="false">Show more ▾</button>
+      <div class="reading-card__body">
+        <p class="reading-card__desc">A seminal Google research paper highlighting how ML systems accumulate technical debt at a much faster rate than traditional software. It explores system-level risks like entanglement, hidden feedback loops, undeclared consumers, and data pipeline jungles, introducing patterns to identify and mitigate these costly maintenance burdens.</p>
+        <p class="reading-card__rec">This was one of the reading assignments in my MLOps class. <strong>It perfectly captures the messy, chaotic reality of the field</strong>, yet reminds me why I find this work so deeply fascinating.</p>
+      </div>
+    </div>
+
   </section>
+  <a href="/" class="back-button">&larr; Back to Main Page</a>
+  <script src="../scripts/reading-list.js"></script>
 </body>
 </html>
