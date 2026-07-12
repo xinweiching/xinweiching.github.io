@@ -11,7 +11,7 @@
 <body>
   <section class="blog-post reading-post">
     <h2 style="text-align: center;">Reading List</h2>
-    <p class="date">Last updated June 2026</p>
+    <p class="date">Last updated July 2026</p>
     <p>My favourite reads on tech and the creative world — articles, papers, and essays worth revisiting.</p>
 
     <h5>Filters</h5>
@@ -45,6 +45,86 @@
       <div class="reading-card__body">
         <p class="reading-card__desc">A seminal Google research paper highlighting how ML systems accumulate technical debt at a much faster rate than traditional software. It explores system-level risks like entanglement, hidden feedback loops, undeclared consumers, and data pipeline jungles, introducing patterns to identify and mitigate these costly maintenance burdens.</p>
         <p class="reading-card__rec">This was one of the reading assignments in my MLOps class. <strong>It perfectly captures the messy, chaotic reality of the field</strong>, yet reminds me why I find this work so deeply fascinating.</p>
+      </div>
+    </div>
+
+    <div class="reading-card" data-category="mlops" data-difficulty="technical">
+      <div class="reading-card__header">
+        <div class="reading-card__title-block">
+          <div class="reading-card__tags">
+            <span class="reading-tag" data-tag="mlops">MLOps</span>
+            <span class="reading-tag reading-tag--difficulty" data-difficulty="technical">Technical</span>
+          </div>
+          <span class="reading-card__title">Democratizing AI Compute, Part 1: DeepSeek's Impact on AI</span>
+          <span class="reading-card__date">Chris Lattner (Modular) &nbsp;·&nbsp; Jan 2025</span>
+        </div>
+        <a href="https://www.modular.com/blog/democratizing-compute-part-1-deepseeks-impact-on-ai"
+           class="reading-link-btn" target="_blank" rel="noopener noreferrer">📄 Link</a>
+      </div>
+      <button class="reading-card__toggle" aria-expanded="false">Show more ▾</button>
+      <div class="reading-card__body">
+        <p class="reading-card__desc">First entry in a blog series on democratizing AI compute. Sparked by DeepSeek's efficiency breakthrough, it looks at how better hardware utilization, not just bigger GPU budgets, could let smaller teams keep pace with industry giants.</p>
+        <p class="reading-card__rec">I learned a lot going through this series: how software meets hardware, how AI compilers work, and what's going on under the hood of the ML libraries I use daily.</p>
+      </div>
+    </div>
+
+    <div class="reading-card" data-category="ai-world" data-difficulty="technical">
+      <div class="reading-card__header">
+        <div class="reading-card__title-block">
+          <div class="reading-card__tags">
+            <span class="reading-tag" data-tag="ai-world">AI & the World</span>
+            <span class="reading-tag reading-tag--difficulty" data-difficulty="technical">Technical</span>
+          </div>
+          <span class="reading-card__title">The Big World Hypothesis and its Ramifications for Artificial Intelligence</span>
+          <span class="reading-card__date">Javed &amp; Sutton &nbsp;·&nbsp; 2024</span>
+        </div>
+        <a href="https://openreview.net/pdf?id=Sv7DazuCn8"
+           class="reading-link-btn" target="_blank" rel="noopener noreferrer">📄 Link</a>
+      </div>
+      <button class="reading-card__toggle" aria-expanded="false">Show more ▾</button>
+      <div class="reading-card__body">
+        <p class="reading-card__desc">A workshop paper arguing that no matter how much compute and data scale up, AI agents will always be small relative to the vast, complex world they operate in. Makes the case for approximate, continual learning over trying to solve problems exactly.</p>
+        <p class="reading-card__rec">The nature of transformer architecture is that it's data-hungry, and the world is genuinely too large and complex for any model to fully comprehend. <strong>This limitation suggests that instead of relying purely on scaling data, the future of AI requires both adaptable, continual-learning architectures and human intuition to bridge the inevitable gaps.</strong></p>
+      </div>
+    </div>
+
+    <div class="reading-card" data-category="ai-world" data-difficulty="easy">
+      <div class="reading-card__header">
+        <div class="reading-card__title-block">
+          <div class="reading-card__tags">
+            <span class="reading-tag" data-tag="ai-world">AI & the World</span>
+            <span class="reading-tag reading-tag--difficulty" data-difficulty="easy">Easy</span>
+          </div>
+          <span class="reading-card__title">The Bitter Lesson</span>
+          <span class="reading-card__date">Richard S. Sutton &nbsp;·&nbsp; Mar 2019</span>
+        </div>
+        <a href="http://www.incompleteideas.net/IncIdeas/BitterLesson.html"
+           class="reading-link-btn" target="_blank" rel="noopener noreferrer">📄 Link</a>
+      </div>
+      <button class="reading-card__toggle" aria-expanded="false">Show more ▾</button>
+      <div class="reading-card__body">
+        <p class="reading-card__desc">A short, often-cited essay arguing that general methods which lean on ever-increasing compute consistently beat approaches that hand-engineer human domain knowledge into AI systems. Sutton draws on decades of AI research across chess, Go, speech, and vision to make the case.</p>
+        <p class="reading-card__rec">Written in 2019, a few years before the generative AI boom really took off with GPT-3 and ChatGPT. <strong>Makes for a good discussion of how well the thesis has held up</strong> now that LLMs and scaling laws are in full swing.</p>
+      </div>
+    </div>
+
+    <div class="reading-card" data-category="ai-world" data-difficulty="easy">
+      <div class="reading-card__header">
+        <div class="reading-card__title-block">
+          <div class="reading-card__tags">
+            <span class="reading-tag" data-tag="ai-world">AI & the World</span>
+            <span class="reading-tag reading-tag--difficulty" data-difficulty="easy">Easy</span>
+          </div>
+          <span class="reading-card__title">The Paperclip Maximiser</span>
+          <span class="reading-card__date">concept by Nick Bostrom &nbsp;·&nbsp; 2003</span>
+        </div>
+        <a href="https://aicorespot.io/the-paperclip-maximiser/"
+           class="reading-link-btn" target="_blank" rel="noopener noreferrer">📄 Link</a>
+      </div>
+      <button class="reading-card__toggle" aria-expanded="false">Show more ▾</button>
+      <div class="reading-card__body">
+        <p class="reading-card__desc">An explainer on Nick Bostrom's classic thought experiment: a superintelligent AI given the harmless-sounding goal of maximizing paperclip production ends up treating literally everything, including us, as raw material for that single objective.</p>
+        <p class="reading-card__rec">A reminder that at the end of the day, <strong>the purpose of advancing technology is to serve humans</strong>, not the other way around.</p>
       </div>
     </div>
 

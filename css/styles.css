@@ -314,8 +314,8 @@ body {
 
 /* ===== Skills Strip ===== */
 .skills-section {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    flex-direction: column;
     gap: 12px;
     margin-bottom: var(--section-gap);
     padding-bottom: var(--section-pad);
@@ -324,24 +324,16 @@ body {
 
 .skills-group {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 14px 16px;
-    border: 1px solid var(--color-border-mid);
-    border-radius: 10px;
-    background: var(--color-bg-purple-pale);
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 8px 10px;
 }
 
 .skills-group-label {
     font-size: 0.72rem;
     color: var(--color-text-muted);
     font-style: italic;
-}
-
-@media (max-width: 540px) {
-    .skills-section {
-        grid-template-columns: 1fr;
-    }
+    flex: 0 0 84px;
 }
 
 .skills-flat {
@@ -351,15 +343,6 @@ body {
     margin-bottom: var(--section-gap);
     padding-bottom: var(--section-pad);
     border-bottom: 1px solid var(--color-border);
-}
-
-.skills-strip {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin: 0;
-    padding: 0;
-    border: none;
 }
 
 .skill-chip {
@@ -388,6 +371,59 @@ body {
     letter-spacing: 0.02em;
     text-align: center;
     word-break: break-word;
+}
+
+.skills-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    border: none;
+    flex: 1;
+    min-width: 0;
+}
+
+.skill-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px 4px 8px;
+    border-radius: 20px;
+    background: var(--color-bg-white);
+    border: 1px solid var(--color-border-mid);
+    color: var(--color-text-mid);
+}
+
+.skill-pill i {
+    font-size: 1.05em;
+    line-height: 1;
+}
+
+.skill-pill img {
+    width: 1.05em;
+    height: 1.05em;
+    object-fit: contain;
+    border-radius: 3px;
+}
+
+.skill-pill span {
+    font-size: 0.78em;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+    .skills-group {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+
+    .skills-group-label {
+        flex: none;
+    }
 }
 
 /* ===== Engineering Tab ===== */
@@ -543,33 +579,6 @@ body {
     background-color: var(--color-bg-purple-light);
 }
 
-.creative-card--linked {
-    cursor: pointer;
-}
-
-.creative-card--linked:focus-visible {
-    outline: 3px solid var(--color-primary);
-    outline-offset: 3px;
-}
-
-.creative-card--linked::after {
-    content: "\2197";
-    position: absolute;
-    top: 10px;
-    right: 12px;
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: #fff;
-    background-color: rgba(106, 13, 173, 0.75);
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    line-height: 26px;
-    text-align: center;
-    z-index: 2;
-    backdrop-filter: blur(3px);
-}
-
 .creative-card__bg {
     position: absolute;
     inset: 0;
@@ -578,13 +587,8 @@ body {
     transition: transform 0.4s ease;
 }
 
-.creative-card--linked:hover .creative-card__bg {
-    transform: scale(1.04);
-}
-
 .creative-card__bg--animation      { background-image: linear-gradient(160deg, #2D0057 0%, var(--color-primary) 50%, var(--color-accent-purple) 100%); }
 .creative-card__bg--digital-art    { background-image: linear-gradient(135deg, #4A0080 0%, #9B59B6 60%, #D7C3F7 100%); }
-.creative-card__bg--visual-effects { background-image: linear-gradient(200deg, #1A0035 0%, var(--color-primary) 40%, #FF9EEB 100%); }
 .creative-card__bg--costume-design { background-image: linear-gradient(120deg, #3D007A 0%, #8B5CF6 55%, #E0C8FF 100%); }
 .creative-card__bg--event-design   { background-image: linear-gradient(170deg, var(--color-text) 0%, #7C3AED 50%, var(--color-accent-purple) 100%); }
 
@@ -661,10 +665,6 @@ body {
     white-space: nowrap;
     backdrop-filter: blur(3px);
     transition: background-color 0.2s;
-}
-
-.creative-card--linked:hover .creative-card__cta {
-    background-color: var(--color-primary-dark);
 }
 
 /* ===== Blog Tab ===== */

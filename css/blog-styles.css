@@ -41,14 +41,6 @@ h4 {
     font-weight: 300;
 }
 
-.monospace {
-    font-family: monospace;
-    color:#4d1278;
-    background-color: #f6edfc;
-    padding:2px;
-    border-radius: 1px;
-}
-
 section {
     padding: 50px 20px;
     text-align: center;

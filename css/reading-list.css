@@ -130,11 +130,6 @@
     align-self: flex-start;
 }
 
-.reading-tag[data-tag="ai-world"] {
-    background-color: #E8F0FF;
-    color: #1A5DC7;
-}
-
 .reading-tag[data-tag="others"] {
     background-color: #F0F0F0;
     color: #555;
